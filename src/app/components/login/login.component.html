@@ -1,0 +1,52 @@
+<div class="container text-center">
+    <div class="row">
+        <div class="col-12 main-title">
+            <h1>Clarkson</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <div class="card bg-secondary mb-3 card-login">
+                <div class="card-body">
+                    <h4 class="card-title">Log In</h4>
+                    <form [formGroup]="loginForm" (ngSubmit)="logIn(loginForm.value)">
+                        <fieldset>
+                            <div class="form-group" [ngClass]="{'has-danger': !loginForm.controls['username'].valid && loginForm.controls['username'].touched}">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" [formControl]="loginForm.controls['username']" required [ngClass]="{'is-invalid': !loginForm.controls['username'].valid && loginForm.controls['username'].touched}" />
+                                <div class="invalid-feedback" *ngIf="!loginForm.controls['username'].valid && loginForm.controls['username'].touched">You must provide a username</div>
+                            </div>
+                            <div class="form-group" [ngClass]="{'has-danger': !loginForm.controls['password'].valid && loginForm.controls['password'].touched}">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" [formControl]="loginForm.controls['password']" required [ngClass]="{'is-invalid': !loginForm.controls['password'].valid && loginForm.controls['password'].touched}" />
+                                <div class="invalid-feedback" *ngIf="!loginForm.controls['password'].valid && loginForm.controls['password'].touched">You must provide a password</div>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control is-invalid" />
+                                <div class="invalid-feedback">{{errorResponse}}</div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary"  [disabled]="!loginForm.valid || loading">Log In</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <a [routerLink]="[ '/register' ]" *ngIf="registrationsEnabled()">Register</a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-5" *ngIf="loading">
+    <div class="col-12 text-center" style="font-size: 20px;">
+        <i class="fas fa-spinner fa-pulse"></i>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<app-nav></app-nav>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="header-title-container">
+                <div class="header-title">
+                    <div class="title">
+                        <h1>Vehicles</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4" *ngFor="let vehicle of vehicles">
+            <div class="card mb-3">
+                <img src="assets/images/emil-vilsek-377013.jpg" />
+                <div class="card-body">
+                    <h4 class="card-title">{{vehicle.name}}</h4>
+                    <p>
+                        {{vehicle.make}} {{vehicle.model}}
+                    </p>
+                    <button type="button" class="btn btn-sm" (click)="selectVehicle(vehicle)" data-toggle="modal" data-target="#vehicleEditModal"><i class="fas fa-pencil-alt"></i>&nbsp;Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-success" (click)="clearSelectedVehicle()" data-toggle="modal" data-target="#vehicleEditModal"><i class="fas fa-plus"></i>&nbsp;Add Vehicle</button>
+        </div>
+    </div>
+
+    <app-vehicle-edit [vehicle]="selectedVehicle" (deleteSuccess)="removeVehicle($event)" (updateSuccess)="updateVehicle($event)" (saveSuccess)="addVehicle($event)"></app-vehicle-edit>
+</div>

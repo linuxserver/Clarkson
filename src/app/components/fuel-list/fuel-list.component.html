@@ -1,0 +1,47 @@
+<div class="container">
+
+    <div class="row mb-5" *ngIf="vehicleId">
+        <div class="col-12">
+            <a class="btn btn-success" [routerLink]="['/fill-ups', vehicleId, 'new']"><i class="fas fa-plus"></i>&nbsp;Add Fuel Log</a>
+        </div>
+    </div>
+
+    <div class="container" *ngIf="loading">
+        <div class="col-12 text-center" style="font-size: 20px;">
+            <i class="fas fa-spinner fa-pulse"></i>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="row" *ngIf="fuelLogs?.length === 0 && !loading">
+        <div class="col-12 text-center">
+            Looks like you haven't filled up yet! Add a fuel log now.
+        </div>
+    </div>
+    <div class="row" *ngIf="fuelLogs?.length > 0">
+
+        <div class="col-lg-6" *ngFor="let fuelLog of fuelLogs">
+            <div class="card mb-3">
+                <div class="card-body p-2">
+
+                    <div class="float-left text-center consumption-value">
+                        <span *ngIf="!fuelLog.consumption">--</span><span *ngIf="fuelLog?.consumption &gt; 0">{{fuelLog.consumption}}</span><br/>{{userPreferences.fuelConsumptionUnit.unit}}
+                    </div>
+
+                    <div class="float-left fuel-log-summary">
+                        {{fuelLog.date | date:'dd/MM/yyyy HH:mm'}}<br/>
+                        <span class="text-number">{{fuelLog.fuelAmount}}</span>{{userPreferences.fuelUnit.unit}} @ <span [innerHTML]="userPreferences.currencyUnit.symbol"></span><span class="text-number">{{fuelLog.fuelUnitCost}}</span> per {{userPreferences.fuelUnit.unit}}<br/>
+                        <span class="text-number">{{fuelLog.tripDistance}}</span> {{userPreferences.distanceUnit.unitName}} travelled.<br/>
+                    </div>
+
+                    <div class="float-right text-right">
+                        <a role="button" class="btn btn-sm btn-secondary" [routerLink]="['/fill-ups', vehicleId, 'edit', fuelLog.id]"><i class="fas fa-pencil-alt" title="Edit"></i></a><br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

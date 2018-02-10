@@ -1,0 +1,96 @@
+<form [formGroup]="vehicleForm" (ngSubmit)="save()">
+    <div class="modal fade" id="vehicleEditModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{vehicle.name}}</h5>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeVehicleEditModal>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" [ngClass]="{'has-danger': !vehicleForm.controls['name'].valid}">
+                                <label for="name">Name *</label>
+                                <input type="text" [(ngModel)]="vehicle.name" [formControl]="vehicleForm.controls['name']" required [ngClass]="{'is-invalid': !vehicleForm.controls['name'].valid && vehicleForm.controls['name'].touched}" class="form-control" />
+                                <input type="hidden" [(ngModel)]="vehicle.id" [formControl]="vehicleForm.controls['id']" class="form-control" />
+                                <div class="invalid-feedback" *ngIf="!vehicleForm.controls['name'].valid && vehicleForm.controls['name'].touched">You must provide a name</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="registration">Registration</label>
+                                <input type="text" [(ngModel)]="vehicle.registration" [formControl]="vehicleForm.controls['registration']" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group" [ngClass]="{'has-danger': !vehicleForm.controls['make'].valid}">
+                                <label for="make">Make *</label>
+                                <input type="text" [(ngModel)]="vehicle.make" [formControl]="vehicleForm.controls['make']" required [ngClass]="{'is-invalid': !vehicleForm.controls['make'].valid && vehicleForm.controls['make'].touched}" class="form-control" />
+                                <div class="invalid-feedback" *ngIf="!vehicleForm.controls['make'].valid && vehicleForm.controls['make'].touched">You must provide a make</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="model">Model</label>
+                                <input type="text" [(ngModel)]="vehicle.model" [formControl]="vehicleForm.controls['model']" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="vin">VIN</label>
+                                <input type="text" [(ngModel)]="vehicle.vin" [formControl]="vehicleForm.controls['vin']" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="yearOfManufacture">Year of Manufacture</label>
+                                <input type="number" [(ngModel)]="vehicle.yearOfManufacture" [formControl]="vehicleForm.controls['yearOfManufacture']" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="engineSizeCC">Engine Size (CC)</label>
+                                <input type="number" [(ngModel)]="vehicle.engineSizeCC" [formControl]="vehicleForm.controls['engineSizeCC']" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="vin">Fuel Type *</label>
+                                <select class="form-control" [(ngModel)]="vehicle.fuelType" [formControl]="vehicleForm.controls['fuelType']">
+                                    <option *ngFor="let fuelType of fuelTypes" [value]="fuelType.id">{{fuelType.type}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control is-invalid" />
+                                <div class="invalid-feedback">{{errorResponse}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix p-3">
+                    <div class="float-left">
+                        <button *ngIf="!isEmptyOrNull(vehicle.id)" (click)="delete()" type="button" class="btn btn-danger">Delete</button>
+                    </div>
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-primary" [disabled]="!vehicleForm.valid">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

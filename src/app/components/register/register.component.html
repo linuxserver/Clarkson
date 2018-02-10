@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="header-title-container">
+                <div class="header-title">
+                    <div class="title">
+                        <h1>Register</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value)">
+        <fieldset>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['username'].valid && registrationForm.controls['username'].touched}">
+                        <label for="username">Username</label>
+                        <input type="text" [formControl]="registrationForm.controls['username']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['username'].valid && registrationForm.controls['username'].touched}" />
+                        <div class="invalid-feedback" *ngIf="!registrationForm.controls['username'].valid && registrationForm.controls['username'].touched">You must provide a username</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched}">
+                        <label for="emailAddress">Email Address</label>
+                        <input type="email" [formControl]="registrationForm.controls['emailAddress']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched}" />
+                        <div class="invalid-feedback" *ngIf="!registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched">You must provide an email address</div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}">
+                        <label for="password">Password</label>
+                        <input type="password" [formControl]="registrationForm.controls['password']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}" />
+                        <div class="invalid-feedback" *ngIf="!registrationForm.controls['password'].valid && registrationForm.controls['password'].touched">Password must be at least 6 characters long</div>
+                    </div>
+                </div>
+                <div class="col-12 text-center">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid || loading">Register</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div class="container" *ngIf="loading">
+    <div class="col-12 text-center" style="font-size: 20px;">
+        <i class="fas fa-spinner fa-pulse"></i>
+    </div>
+</div>

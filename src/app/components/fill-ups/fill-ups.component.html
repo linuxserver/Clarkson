@@ -1,0 +1,32 @@
+<app-nav></app-nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="header-title-container">
+                <div class="header-title">
+                    <div class="title">
+                        <h1>Fill-Ups</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mb-5">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label for="vin">Vehicle</label>
+                <select class="form-control" (change)="goToFuelLogs($event.target.value)">
+                    <option value="-1" disabled>Select Vehicle...</option>
+                    <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">{{vehicle.name}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<router-outlet></router-outlet>

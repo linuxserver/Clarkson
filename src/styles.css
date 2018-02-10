@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster');
+
+.navbar {
+    padding: 0.5rem 1rem;
+}
+
+h1, a.navbar-brand {
+    font-family: "Lobster", cursive;
+    text-transform: none;
+    font-weight: 100;
+}
+
+.main-title h1 {
+    margin-top: 30px;
+    font-size: 4rem;
+}
+
+a.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.card-login {
+    margin-top: 50px;
+}
+
+.card-header {
+    text-transform: uppercase;
+}
+
+.header-title-container {
+    height: 40px;
+    margin: 40px 0 20px 0;
+}
+
+.header-title {
+    text-align: center;
+    height: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+}
+
+.header-title .title {
+    background-color: #fff;
+    display: inline-block;
+    padding: 0 1rem;
+}
+
+.header-title .title h1, .header-title .title h3 {
+    display: inline-block;
+    font-family: "Lobster", cursive;
+    text-transform: none;
+    font-weight: 100;
+    color: #333;
+    letter-spacing: 0;
+}
+
+.col-chart {
+    height: 300px;
+}
+
+.datetime-now {
+    cursor: pointer;
+}
+
+.responsive-table {
+    overflow-x: scroll;
+}
+
+table tbody td.contains-button-sm {
+    padding: 1.2rem;
+}
+
+.card {
+
+    -webkit-box-shadow: 5px 5px 0px -2px rgba(0,0,0,0.125);
+    -moz-box-shadow: 5px 5px 0px -2px rgba(0,0,0,0.125);
+    box-shadow: 5px 5px 0px -2px rgba(0,0,0,0.125);
+}
+
+.consumption-value {
+    font-weight: 300;
+    font-size: 1.5rem;
+    font-family: monospace;
+    background-color: #efefef;
+    padding: 10px;
+    min-width: 80px;
+}
+
+.text-number {
+    font-family: monospace;
+    font-size: 1.2rem;
+}
+
+.fuel-log-summary {
+
+    text-transform: lowercase;
+    padding: 0 0 0 10px;
+}
+
+.card img {
+    height: auto;
+    max-width: 100%;
+    max-height: 300px;
+}
+
+@media (min-width: 992px) {
+
+    .modal-dialog {
+        max-width: 800px;
+    }
+}

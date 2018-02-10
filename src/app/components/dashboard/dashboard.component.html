@@ -1,0 +1,79 @@
+<app-nav></app-nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="header-title-container">
+                <div class="header-title">
+                    <div class="title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" *ngIf="dashboardTopStats?.length == 0">
+    <div class="col-12 text-center">
+        No stats to report! Start filling up to see details on your mileage!
+    </div>
+</div>
+
+<div class="container" *ngIf="userPreferences && dashboardTopStats?.length &gt; 0">
+    <div class="row">
+
+        <div class="col-lg-3">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Number of vehicles</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{totalVehicles}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Distance</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{totalDistance}} {{userPreferences.distanceUnit.unit}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Fill-ups</div>
+                <div class="card-body">
+                    <h4 class="card-title">{{totalFillUps}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card text-white bg-dark mb-3">
+                <div class="card-header">Total Spent</div>
+                <div class="card-body">
+                    <h4 class="card-title"><span [innerHTML]="userPreferences.currencyUnit.symbol"></span>{{totalSpent}}</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5" *ngFor="let chart of chartData">
+        <div class="col-12">
+
+            <div class="card bg-secondary mb-3">
+                <div class="card-header">Fuel Consumption ({{chart.vehicleName}})</div>
+                <div class="card-body">
+                    <canvas baseChart height="100"
+                        [options]="chartOptions"
+                        [datasets]="chart.dataset"
+                        [labels]="chart.labels"
+                        [chartType]="chartType">
+                    </canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

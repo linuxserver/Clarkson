@@ -1,0 +1,32 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Clarkson</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="active"><i class="fas fa-chart-pie"></i>&nbsp;Dashboard</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" [routerLink]="['/vehicles']" routerLinkActive="active"><i class="fas fa-car"></i>&nbsp;Vehicles</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" [routerLink]="['/fill-ups']" routerLinkActive="active"><i class="fas fa-arrow-circle-up"></i>&nbsp;Fill-Ups</a>
+            </li>
+            <!-- <li class="nav-item dropdown">
+                <a class="nav-link" [routerLink]="['/costs']" routerLinkActive="active"><i class="fas fa-credit-card"></i>&nbsp;Costs</a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/settings']" routerLinkActive="active"><i class="fas fa-cog"></i>&nbsp;Settings</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/donate']"><i class="fab fa-paypal"></i>&nbsp;Donate</a>
+            </li> -->
+        </ul>
+        <div *ngIf="isUserLoggedIn()" class="my-2 my-lg-0">
+            <button type="button" class="btn btn-primary btn-sm" (click)="logOut()">Logout</button>
+        </div>
+    </div>
+</nav>

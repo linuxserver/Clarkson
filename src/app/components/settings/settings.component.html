@@ -1,0 +1,96 @@
+<app-nav></app-nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="header-title-container">
+                <div class="header-title">
+                    <div class="title">
+                        <h1>Settings</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="userPreferencesForm" (ngSubmit)="savePreferences()">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Units</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="row" *ngIf="userPreferences && fuelUnits?.length > 0">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="vin">Fuel Units</label>
+                    <select class="form-control" [(ngModel)]="userPreferences.fuelUnit.id" [formControl]="userPreferencesForm.controls['fuelUnit']">
+                        <option *ngFor="let fuelUnit of fuelUnits"[value]="fuelUnit.id">{{fuelUnit.unitName}} ({{fuelUnit.unit}})</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="userPreferences && fuelConsumptionUnits?.length > 0">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="vin">Consumption Units</label>
+                    <select class="form-control" [(ngModel)]="userPreferences.fuelConsumptionUnit.id" [formControl]="userPreferencesForm.controls['fuelConsumptionUnit']">
+                        <option *ngFor="let fuelConsumptionUnit of fuelConsumptionUnits" [value]="fuelConsumptionUnit.id">{{fuelConsumptionUnit.unitName}} ({{fuelConsumptionUnit.unit}})</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="userPreferences && distanceUnits?.length > 0">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="vin">Distance Units</label>
+                    <select class="form-control" [(ngModel)]="userPreferences.distanceUnit.id" [formControl]="userPreferencesForm.controls['distanceUnit']">
+                        <option *ngFor="let distanceUnit of distanceUnits"[value]="distanceUnit.id">{{distanceUnit.unitName}} ({{distanceUnit.unit}})</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="userPreferences && currencyUnits?.length > 0">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="vin">Currency</label>
+                    <select class="form-control" [(ngModel)]="userPreferences.currencyUnit.id" [formControl]="userPreferencesForm.controls['currencyUnit']">
+                        <option *ngFor="let currencyUnit of currencyUnits" [value]="currencyUnit.id">{{currencyUnit.unitName}} ({{currencyUnit.unit}})</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 clearfix p-3 text-right">
+                <button type="submit" class="btn btn-primary" [disabled]="!userPreferencesForm.valid">Save</button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="preferencesUpdateSuccess">
+            <div class="col-12">
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Preferences Updated</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="preferencesUpdateFailure">
+            <div class="col-12">
+                <div class="alert alert-danger">
+                    <strong>Error updating preferences</strong>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
