@@ -57,18 +57,13 @@ router.put("/:id", function(req, res) {
 router.delete("/:id", function(req, res) {
 
     Vehicle.remove(req.params.id, function(error) {
-        response.handle(res, "status", "Item deleted", error);
+        response.handle(res, { "status": "Item deleted" }, error);
     });
 });
 
 router.get("/:vehicleId/fuel", function(req, res) {
 
     Fuel.findAll(req.params.vehicleId, function(error, fuel) {
-
-        if (error) {
-            return response.internalError(res, error);
-        }
-
         return response.handle(res, { fuel }, error);
     });
 });
