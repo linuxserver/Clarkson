@@ -1,4 +1,4 @@
-** This application is still in early development, and as such, no initial release has been made.**
+**This application is still in early development, and as such, no initial release has been made.**
 
 # Clarkson
 
