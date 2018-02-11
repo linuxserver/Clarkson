@@ -34,6 +34,12 @@
                         <div class="invalid-feedback" *ngIf="!registrationForm.controls['password'].valid && registrationForm.controls['password'].touched">Password must be at least 6 characters long</div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control is-invalid" />
+                        <div class="invalid-feedback">{{errorResponse}}</div>
+                    </div>
+                </div>
                 <div class="col-12 text-center">
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid || loading">Register</button>

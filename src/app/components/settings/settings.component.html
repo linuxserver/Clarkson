@@ -28,7 +28,7 @@
         <div class="row" *ngIf="userPreferences && fuelUnits?.length > 0">
             <div class="col-12">
                 <div class="form-group">
-                    <label for="vin">Fuel Units</label>
+                    <label for="vin">Fuel Units <i class="fas fa-exclamation-triangle"></i></label>
                     <select class="form-control" [(ngModel)]="userPreferences.fuelUnit.id" [formControl]="userPreferencesForm.controls['fuelUnit']">
                         <option *ngFor="let fuelUnit of fuelUnits"[value]="fuelUnit.id">{{fuelUnit.unitName}} ({{fuelUnit.unit}})</option>
                     </select>
@@ -50,7 +50,7 @@
         <div class="row" *ngIf="userPreferences && distanceUnits?.length > 0">
             <div class="col-12">
                 <div class="form-group">
-                    <label for="vin">Distance Units</label>
+                    <label for="vin">Distance Units <i class="fas fa-exclamation-triangle"></i></label>
                     <select class="form-control" [(ngModel)]="userPreferences.distanceUnit.id" [formControl]="userPreferencesForm.controls['distanceUnit']">
                         <option *ngFor="let distanceUnit of distanceUnits"[value]="distanceUnit.id">{{distanceUnit.unitName}} ({{distanceUnit.unit}})</option>
                     </select>
@@ -66,6 +66,12 @@
                         <option *ngFor="let currencyUnit of currencyUnits" [value]="currencyUnit.id">{{currencyUnit.unitName}} ({{currencyUnit.unit}})</option>
                     </select>
                 </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <i class="fas fa-exclamation-triangle"></i> Updating these values will <em>not</em> recalculate previously supplied fill-up data.
             </div>
         </div>
 

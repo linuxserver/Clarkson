@@ -1,3 +1,5 @@
+** This application is still in early development, and as such, no initial release has been made.**
+
 # Clarkson
 
 Clarkson is a web-based dashboard application that gives you a neat and clean interface for logging your fuel fill-ups for all of your vehicles. The application has full multi-user support, as well as multiple vehicles per user. Whenever you fill-up your car or motorcycle, keep the receipt and record the data in Clarkson.
@@ -23,7 +25,7 @@ Clarkson is a web-based dashboard application that gives you a neat and clean in
   - Consumption Units: MPG, L/100KM
   - Distance Units: Miles, Kilometres
   - Currency Units: GBP, USD, EUR, AUD, CAD
-  
+
 ## Running the application
 
 Clarkson has an Angular front-end, with ExpressJS backend, connecting to a MySQL database. It uses Flyway as a means of managing incremental migrations of the database schema.
@@ -72,7 +74,7 @@ Before you run the application, you'll need to run a database migration using _f
 Finally, start the application by running:
 
 ```bash
-MYSQL_HOST=<mysql_host_ip> MYSQL_USERNAME=<mysql_user> MYSQL_PASSWORD=<mysql_user> ENABLE_REGISTRATIONS=true node clarkson.js
+MYSQL_HOST=<mysql_host_ip> MYSQL_USERNAME=<mysql_user> MYSQL_PASSWORD=<mysql_user> ENABLE_REGISTRATIONS=true APP_PORT=3000 node clarkson.js
 ```
 
 Environment variables at startup:
@@ -83,6 +85,7 @@ Environment variables at startup:
 | MYSQL_USERNAME | _Yes_ | The user with access to the _clarkson_ schema |
 | MYSQL_PASSWORD | _Yes_ | The password for the user |
 | ENABLE_REGISTRATIONS | _No_ | **Defaults to _false_**. If set to _true_, allows new users to register |
+| APP_PORT | _No_ | **Defaults to 3000**. Changes the running port of the application |
 
 ## Credits
 

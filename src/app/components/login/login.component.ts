@@ -5,10 +5,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { AuthCredentials } from '../../model/auth-credentials';
 
+import { environment } from '../../../environments/environment';
+
 @Component({
     selector: 'app-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
 
@@ -45,12 +46,21 @@ export class LoginComponent implements OnInit {
             err => {
 
                 this.loading = false;
-                this.errorResponse = err.error.message;
+                this.showErrorMessage(err.error.message);
             }
         );
     }
 
+    public showErrorMessage(err: any) {
+
+        if (typeof err.error.message === 'string') {
+            this.errorResponse = err.error.message;
+        } else {
+            this.errorResponse = err.error.message.sqlMessage;
+        }
+    }
+
     public registrationsEnabled() {
-        return true;
+        return environment.enableRegistrations;
     }
 }

@@ -9,7 +9,7 @@ module.exports = (function() {
 
         verifyRegistrations(req, res, next) {
 
-            if (config.enableRegistration) {
+            if (config.enableRegistration === "true") {
                 next();
             } else {
                 return response.forbidden(res, "Registrations are closed");

@@ -26,7 +26,7 @@ router.post("/", auth.verifyRegistrations, function(req, res) {
             User.find(userId, function(sqlError, user) {
 
                 delete user.password;
-                response.handle(res, { user }, error);
+                response.handle(res, { user }, sqlError);
             });
         });
     });

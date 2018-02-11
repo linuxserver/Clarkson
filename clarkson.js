@@ -1,9 +1,10 @@
 var express = require("express"),
-    app = express(),
-    path = require("path"),
-    morgan = require("morgan"),
-    db = require("./server/db/mysql"),
-    auth = require("./server/security/auth");
+    app     = express(),
+    path    = require("path"),
+    morgan  = require("morgan"),
+    db      = require("./server/db/mysql"),
+    config  = require("./server/config"),
+    auth    = require("./server/security/auth");
 
 app.use(require("helmet")());
 app.use(require("body-parser").json());
@@ -40,6 +41,6 @@ db.connect(function(err) {
     if (err) {
         throw err;
     } else {
-        module.exports = app.listen(3000);
+        module.exports = app.listen(config.port);
     }
 });

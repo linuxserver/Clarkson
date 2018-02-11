@@ -4,6 +4,8 @@ module.exports = (function() {
 
     return {
 
+        port: process.env.APP_PORT || 3000,
+
         enableRegistration: process.env.ENABLE_REGISTRATIONS || false,
 
         mysql: {

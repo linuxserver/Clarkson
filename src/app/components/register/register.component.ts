@@ -7,8 +7,7 @@ import { User } from '../../model/user';
 
 @Component({
     selector: 'app-register',
-    templateUrl: './register.component.html',
-    styleUrls: ['./register.component.css']
+    templateUrl: './register.component.html'
 })
 export class RegisterComponent implements OnInit {
 
@@ -41,14 +40,23 @@ export class RegisterComponent implements OnInit {
             data => {
 
                 this.loading = false;
-                this.router.navigate([ '/login' ]);
+                this.router.navigate(['/login']);
             },
 
             err => {
 
                 this.loading = false;
-                console.log(err.error.message);
+                this.showErrorMessage(err);
             }
         );
+    }
+
+    public showErrorMessage(err: any) {
+
+        if (typeof err.error.message === 'string') {
+            this.errorResponse = err.error.message;
+        } else {
+            this.errorResponse = err.error.message.sqlMessage;
+        }
     }
 }
