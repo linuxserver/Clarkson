@@ -8,6 +8,8 @@ Clarkson is a web-based dashboard application that gives you a neat and clean in
 
 ![](https://raw.githubusercontent.com/linuxserver/Clarkson/master/docs/dashboard.png)
 
+![](https://raw.githubusercontent.com/linuxserver/Clarkson/master/docs/fill-ups.png)
+
 ## Features
 
 - Dashboard giving you high-level statistics on your vehicle fill-ups, including:
