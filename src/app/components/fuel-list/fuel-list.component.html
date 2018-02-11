@@ -27,7 +27,7 @@
                 <div class="card-body p-2">
 
                     <div class="float-left text-center consumption-value">
-                        <span *ngIf="!fuelLog.consumption">--</span><span *ngIf="fuelLog?.consumption &gt; 0">{{fuelLog.consumption}}</span><br/>{{userPreferences.fuelConsumptionUnit.unit}}
+                        <span *ngIf="!fuelLog.consumption">--</span><span *ngIf="fuelLog?.consumption &gt; 0">{{fuelLog.consumption | number:'1.2-2'}}</span><br/>{{userPreferences.fuelConsumptionUnit.unit}}
                     </div>
 
                     <div class="float-left fuel-log-summary">

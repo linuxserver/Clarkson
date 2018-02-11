@@ -53,7 +53,7 @@
             <div class="card text-white bg-dark mb-3">
                 <div class="card-header">Total Spent</div>
                 <div class="card-body">
-                    <h4 class="card-title"><span [innerHTML]="userPreferences.currencyUnit.symbol"></span>{{totalSpent}}</h4>
+                    <h4 class="card-title"><span [innerHTML]="userPreferences.currencyUnit.symbol"></span>{{totalSpent | number:'1.2-2'}}</h4>
                 </div>
             </div>
         </div>
