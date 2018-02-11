@@ -34,10 +34,15 @@ Clarkson has an Angular front-end, with ExpressJS backend, connecting to a MySQL
 
 #### Get the dependencies
 
-To get the application running, you'll need `node` and `npm` installed. Firstly, install the angular-cli (plus ts dependencies), then grab all of the dependencies:
+To get the application running, you'll need `node` and `npm` installed. Firstly, install the angular-cli (plus ts dependencies):
 
 ```bash
 npm install -g @angular/cli ts-node typescript
+```
+
+Then grab all of the dependencies for the app itself:
+
+```bash
 npm install
 ```
 
