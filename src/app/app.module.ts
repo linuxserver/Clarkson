@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { ChartsModule } from 'ng2-charts';
-import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { ChartsModule } from 'ng2-charts';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { AppComponent } from './app.component';
 import { VehicleEditComponent } from './components/vehicle-edit/vehicle-edit.component';
@@ -54,7 +55,8 @@ import { UnauthorisedResponseInterceptor } from './interceptors/unauthorised-res
         HttpClientModule,
         ReactiveFormsModule,
         AppRoutingModule,
-        ChartsModule
+        ChartsModule,
+        FlashMessagesModule.forRoot()
     ],
     providers: [
         VehicleService,

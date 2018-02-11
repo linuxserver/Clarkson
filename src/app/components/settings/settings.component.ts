@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { UnitService } from '../../services/unit.service';
 import { UserService } from '../../services/user.service';
 
@@ -24,7 +25,8 @@ export class SettingsComponent implements OnInit {
     public preferencesUpdateSuccess: boolean;
     public preferencesUpdateFailure: boolean;
 
-    constructor(private formBuilder: FormBuilder, private unitService: UnitService, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private unitService: UnitService, private userService: UserService,
+        private flashMessageService: FlashMessagesService) {
 
         this.userPreferencesForm = formBuilder.group({
 
@@ -65,10 +67,10 @@ export class SettingsComponent implements OnInit {
         this.userService.updateUserPreferences(this.userId, this.userPreferences).subscribe(
 
             data => {
-                this.preferencesUpdateSuccess = true;
+                this.flashMessageService.show('Settings updated.', { cssClass: 'alert-success' });
             },
             err => {
-                this.preferencesUpdateFailure = true;
+                this.flashMessageService.show('Unable to update settings.', { cssClass: 'alert-danger' });
             }
         );
     }

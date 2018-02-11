@@ -20,6 +20,10 @@ module.exports = (function() {
 
     var internalError = function(res, message) {
 
+        if (message.sqlMessage !== undefined) {
+            message = message.sqlMessage;
+        }
+
         return res.status(500).json({
             status: "Error",
             message

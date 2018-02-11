@@ -29,7 +29,15 @@ export class DashboardComponent implements OnInit {
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                    beginAtZero: false
+                },
+                gridLines: {
+                    display: false
+                }
+            }],
+            xAxes: [{
+                gridLines: {
+                    display: false
                 }
             }]
         }
@@ -86,7 +94,7 @@ export class DashboardComponent implements OnInit {
 
                 for (let i = 1; i < fuel.fuel.length; i++) {
 
-                    vehicleChartData.labels.push(fuel.fuel[i].date);
+                    vehicleChartData.labels.push('');
                     vehicleChartData.dataset[0].data.push(fuel.fuel[i].consumption);
                 }
 

@@ -102,6 +102,10 @@ table tbody td.contains-button-sm {
     max-height: 300px;
 }
 
+.alert p {
+    margin-bottom: 0;
+}
+
 @media (min-width: 992px) {
 
     .modal-dialog {

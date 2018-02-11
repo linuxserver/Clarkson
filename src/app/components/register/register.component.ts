@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { UserService } from '../../services/user.service';
+
 import { User } from '../../model/user';
 
 @Component({
@@ -15,12 +17,14 @@ export class RegisterComponent implements OnInit {
     public errorResponse: string;
     public loading: boolean;
 
-    constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private router: Router, private userService: UserService,
+        private flashMessageService: FlashMessagesService) {
 
         this.registrationForm = formBuilder.group({
             'username': [null, Validators.required],
-            'emailAddress': [null, Validators.required],
-            'password': [null, [Validators.required, Validators.minLength(6)]]
+            'emailAddress': [null, [Validators.required, Validators.email]],
+            'password': [null, [Validators.required, Validators.minLength(6)]],
+            'passwordConfirm': [null, [Validators.required, this.matchingPasswords]]
         });
     }
 
@@ -40,6 +44,7 @@ export class RegisterComponent implements OnInit {
             data => {
 
                 this.loading = false;
+                this.flashMessageService.show('Registration Sucessful. You can now log in.', { cssClass: 'alert-success' });
                 this.router.navigate(['/login']);
             },
 
@@ -58,5 +63,15 @@ export class RegisterComponent implements OnInit {
         } else {
             this.errorResponse = err.error.message.sqlMessage;
         }
+    }
+
+    private matchingPasswords(input: FormControl) {
+
+        if (!input.root || !input.root['controls']) {
+            return null;
+        }
+
+        const exactMatch = input.root['controls'].password.value === input.value;
+        return exactMatch ? null : { mismatchedPassword: true };
     }
 }

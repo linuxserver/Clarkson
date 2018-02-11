@@ -80,23 +80,5 @@
                 <button type="submit" class="btn btn-primary" [disabled]="!userPreferencesForm.valid">Save</button>
             </div>
         </div>
-
-        <div class="row" *ngIf="preferencesUpdateSuccess">
-            <div class="col-12">
-                <div class="alert alert-dismissible alert-success">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Preferences Updated</strong>
-                </div>
-            </div>
-        </div>
-
-        <div class="row" *ngIf="preferencesUpdateFailure">
-            <div class="col-12">
-                <div class="alert alert-danger">
-                    <strong>Error updating preferences</strong>
-                </div>
-            </div>
-        </div>
-
     </div>
 </form>

@@ -20,8 +20,7 @@ import { UnitService } from '../../services/unit.service';
 
 @Component({
     selector: 'app-vehicle-edit',
-    templateUrl: './vehicle-edit.component.html',
-    styleUrls: ['./vehicle-edit.component.css']
+    templateUrl: './vehicle-edit.component.html'
 })
 export class VehicleEditComponent implements OnInit, AfterViewChecked {
 

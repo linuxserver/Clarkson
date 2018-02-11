@@ -98,3 +98,4 @@ Environment variables at startup:
 - Charts: [ng2-charts](https://github.com/valor-software/ng2-charts)
 - Theme: [Bootstrap](https://getbootstrap.com/)
 - Theme: [Bootswatch](https://bootswatch.com/lux/)
+- Flash Notifications: [angular2-flash-messages](https://github.com/moff/angular2-flash-messages)

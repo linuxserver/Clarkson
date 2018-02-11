@@ -13,38 +13,42 @@
     <form [formGroup]="registrationForm" (ngSubmit)="register(registrationForm.value)">
         <fieldset>
             <div class="row">
-                <div class="col-12">
-                    <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['username'].valid && registrationForm.controls['username'].touched}">
-                        <label for="username">Username</label>
-                        <input type="text" [formControl]="registrationForm.controls['username']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['username'].valid && registrationForm.controls['username'].touched}" />
-                        <div class="invalid-feedback" *ngIf="!registrationForm.controls['username'].valid && registrationForm.controls['username'].touched">You must provide a username</div>
+
+                <div class="col-lg-3"></div>
+                <div class="col-lg-6">
+                    <div class="card bg-secondary mb-3 card-login">
+                        <div class="card-body">
+                            <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['username'].valid && registrationForm.controls['username'].touched}">
+                                <label for="username">Username</label>
+                                <input type="text" [formControl]="registrationForm.controls['username']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['username'].valid && registrationForm.controls['username'].touched}" />
+                                <div class="invalid-feedback" *ngIf="!registrationForm.controls['username'].valid && registrationForm.controls['username'].touched">You must provide a username</div>
+                            </div>
+                            <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched}">
+                                <label for="emailAddress">Email Address</label>
+                                <input type="email" [formControl]="registrationForm.controls['emailAddress']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched}" />
+                                <div class="invalid-feedback" *ngIf="!registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched">You must provide a valid email address</div>
+                            </div>
+                            <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}">
+                                <label for="password">Password</label>
+                                <input type="password" [formControl]="registrationForm.controls['password']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}" />
+                                <div class="invalid-feedback" *ngIf="!registrationForm.controls['password'].valid && registrationForm.controls['password'].touched">Password must be at least 6 characters long</div>
+                            </div>
+                            <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['passwordConfirm'].valid && registrationForm.controls['passwordConfirm'].touched}">
+                                <label for="passwordConfirm">Confirm Password</label>
+                                <input type="password" [formControl]="registrationForm.controls['passwordConfirm']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['passwordConfirm'].valid && registrationForm.controls['passwordConfirm'].touched}" />
+                                <div class="invalid-feedback" *ngIf="!registrationForm.controls['passwordConfirm'].valid && registrationForm.controls['passwordConfirm'].touched">Passwords do not match</div>
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" class="form-control is-invalid" />
+                                <div class="invalid-feedback">{{errorResponse}}</div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid || loading">Register</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched}">
-                        <label for="emailAddress">Email Address</label>
-                        <input type="email" [formControl]="registrationForm.controls['emailAddress']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched}" />
-                        <div class="invalid-feedback" *ngIf="!registrationForm.controls['emailAddress'].valid && registrationForm.controls['emailAddress'].touched">You must provide an email address</div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group" [ngClass]="{'has-danger': !registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}">
-                        <label for="password">Password</label>
-                        <input type="password" [formControl]="registrationForm.controls['password']" class="form-control" required [ngClass]="{'is-invalid': !registrationForm.controls['password'].valid && registrationForm.controls['password'].touched}" />
-                        <div class="invalid-feedback" *ngIf="!registrationForm.controls['password'].valid && registrationForm.controls['password'].touched">Password must be at least 6 characters long</div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="form-group">
-                        <input type="hidden" class="form-control is-invalid" />
-                        <div class="invalid-feedback">{{errorResponse}}</div>
-                    </div>
-                </div>
-                <div class="col-12 text-center">
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid || loading">Register</button>
-                    </div>
-                </div>
+                <div class="col-lg-3"></div>
             </div>
         </fieldset>
     </form>
