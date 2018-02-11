@@ -76,6 +76,7 @@ Before you run the application, you'll need to run a database migration using _f
 ```
 
 **Note**: The `-user`, `-password` and `-url` values must match those that you use when running the application (see below).
+**JRE**: Flyway is a Java tool, so requires the JRE to be available in `$PATH`. It is not packaged as part of this application due to variations in OS requirements.
 
 #### Start the app
 
