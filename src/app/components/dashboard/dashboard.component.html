@@ -65,6 +65,7 @@
             <div class="card bg-secondary mb-3">
                 <div class="card-header">Fuel Consumption ({{chart.vehicleName}})</div>
                 <div class="card-body">
+                    <canvas baseChart height="400"
                         [options]="chartOptions"
                         [datasets]="chart.dataset"
                         [labels]="chart.labels"
