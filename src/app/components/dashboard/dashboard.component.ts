@@ -23,9 +23,17 @@ export class DashboardComponent implements OnInit {
     public totalFillUps: number;
     public totalSpent: number;
 
-    public chartOptions: {
+    public chartOptions: any = {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+            padding: {
+                left: 30,
+                right: 0,
+                top: 0,
+                bottom: 0
+            }
+        },
         scales: {
             yAxes: [{
                 ticks: {
