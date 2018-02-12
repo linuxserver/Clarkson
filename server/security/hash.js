@@ -1,4 +1,4 @@
-var bcrypt = require("bcrypt"),
+var bcrypt = require("bcryptjs"),
     crypto = require("crypto");
 
 module.exports = (function() {
