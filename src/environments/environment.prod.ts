@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiBaseUrl: 'http://localhost:3000/api',
+    apiBaseUrl: window.location.origin + '/api',
     enableRegistrations: true
 };
