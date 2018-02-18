@@ -24,6 +24,9 @@ export class ConsumptionComponent implements OnInit {
         },
         scales: {
             yAxes: [{
+                scaleLabel: {
+                    display: true
+                },
                 ticks: {
                     beginAtZero: false
                 },
@@ -52,6 +55,8 @@ export class ConsumptionComponent implements OnInit {
 
     ngOnInit() {
 
+        this.chartOptions.scales.yAxes[0].scaleLabel.labelString = this.userPreferences.fuelConsumptionUnit.unit;
+
         this.fuelService.getFuelForVehicle(this.vehicle.id, this.userPreferences).subscribe(data => {
             this.buildConsumptionChart(data.fuel);
         });
@@ -66,7 +71,7 @@ export class ConsumptionComponent implements OnInit {
             dataset: [
                 {
                     data: [],
-                    label: `${this.vehicle.name} (${this.userPreferences.fuelConsumptionUnit.unit})`,
+                    label: `${this.vehicle.name}`,
                 }
             ]
         };

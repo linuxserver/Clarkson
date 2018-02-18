@@ -1,8 +1,8 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 import { UserPreferences } from '../../../../model/user-preferences';
-import { DashboardService } from '../../../../services/dashboard.service';
+import { DashboardService, FuelCostsByYear } from '../../../../services/dashboard.service';
 
 @Component({
     selector: 'app-monthly-fuel-costs-chart',
@@ -23,6 +23,10 @@ export class MonthlyFuelCostsComponent implements OnInit {
         },
         scales: {
             yAxes: [{
+                scaleLabel: {
+                    display: true
+                },
+                stacked: true,
                 ticks: {
                     beginAtZero: true
                 },
@@ -38,35 +42,44 @@ export class MonthlyFuelCostsComponent implements OnInit {
         }
     };
 
-    public chartData = [];
+    public chartData;
     public chartType = 'bar';
+
+    @Input()
+    public userPreferences: UserPreferences;
 
     constructor(private dashboardService: DashboardService) { }
 
     ngOnInit() {
 
+        this.baseChartOptions.scales.yAxes[0].scaleLabel.labelString = this.userPreferences.currencyUnit.unit;
+
         this.dashboardService.getMonthlyFuelCosts().subscribe(data => {
-
-            const years = Array.from(data.keys()).sort((n, m) => m - n);
-            for (const year of years) {
-
-                const vehicleChartData = {
-                    year: year,
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    dataset: []
-                };
-
-                const vehicles = Array.from(data.get(year).vehicles.keys());
-                for (const vehicle of vehicles) {
-
-                    vehicleChartData.dataset.push({
-                        label: vehicle,
-                        data: data.get(year).vehicles.get(vehicle).monthlyFuelCosts
-                    });
-                }
-
-                this.chartData.push(vehicleChartData);
-            }
+            this.buildChart(data);
         });
+    }
+
+    private buildChart(data: Map<number, FuelCostsByYear>) {
+
+        const vehicleChartData = {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            dataset: []
+        };
+
+        const years = Array.from(data.keys()).sort((n, m) => n - m);
+        for (let yearIndex = 0; yearIndex < years.length; yearIndex++) {
+
+            const vehicles = Array.from(data.get(years[yearIndex]).vehicles.keys());
+            for (let vehicleIndex = 0; vehicleIndex < vehicles.length; vehicleIndex++) {
+
+                vehicleChartData.dataset.push({
+                    label: `${vehicles[vehicleIndex]} (${years[yearIndex]})`,
+                    data: data.get(years[yearIndex]).vehicles.get(vehicles[vehicleIndex]).monthlyFuelCosts,
+                    stack: yearIndex + 1
+                });
+            }
+
+            this.chartData = vehicleChartData;
+        }
     }
 }
