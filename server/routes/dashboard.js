@@ -15,4 +15,16 @@ router.get("/", function(req, res) {
     });
 });
 
+router.get("/monthlyFuelCosts", function(req, res) {
+
+    Dashboard.getMonthlyFuelCosts(req.token.id, function(error, monthlyFuelCosts) {
+
+        if (error) {
+            return response.internalError(res, error);
+        }
+
+        response.handle(res, { monthlyFuelCosts }, error);
+    });
+});
+
 module.exports = router;

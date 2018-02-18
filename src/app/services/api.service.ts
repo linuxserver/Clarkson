@@ -17,7 +17,8 @@ import {
     FuelConsumptionUnitsApiResponse,
     DistanceUnitsApiResponse,
     CurrencyUnitsApiResponse,
-    DashboardTopStatsApiResponse
+    DashboardTopStatsApiResponse,
+    DashboardMonthlyFuelCostsApiResponse
 } from '../model/api';
 
 import { AuthCredentials } from '../model/auth-credentials';
@@ -113,5 +114,9 @@ export class ApiService {
 
     public getDashboardTopStats(): Observable<DashboardTopStatsApiResponse> {
         return this.httpClient.get<DashboardTopStatsApiResponse>(`${this.baseUrl}/dashboard`);
+    }
+
+    public getMonthlyFuelCosts(): Observable<DashboardMonthlyFuelCostsApiResponse> {
+        return this.httpClient.get<DashboardMonthlyFuelCostsApiResponse>(`${this.baseUrl}/dashboard/monthlyFuelCosts`);
     }
 }

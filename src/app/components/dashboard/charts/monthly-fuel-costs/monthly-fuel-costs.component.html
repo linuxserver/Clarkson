@@ -1,0 +1,8 @@
+<div class="card bg-secondary mb-3" *ngFor="let chart of chartData; let index = index">
+
+    <h4 class="pl-3 pt-3 text-center">{{chart.year}}</h4>
+    <div class="card-body">
+        <canvas baseChart #chart{{index}} height="400" [options]="baseChartOptions" [datasets]="chart.dataset" [labels]="chart.labels" [chartType]="chartType">
+                </canvas>
+    </div>
+</div>

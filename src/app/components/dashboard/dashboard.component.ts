@@ -23,36 +23,7 @@ export class DashboardComponent implements OnInit {
     public totalFillUps: number;
     public totalSpent: number;
 
-    public chartOptions: any = {
-        responsive: true,
-        maintainAspectRatio: false,
-        layout: {
-            padding: {
-                left: 30,
-                right: 0,
-                top: 0,
-                bottom: 0
-            }
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: false
-                },
-                gridLines: {
-                    display: false
-                }
-            }],
-            xAxes: [{
-                gridLines: {
-                    display: false
-                }
-            }]
-        }
-    };
-
-    public chartData = [];
-    public chartType = 'line';
+    public vehicles: Vehicle[];
 
     constructor(private userService: UserService, private dashboardService: DashboardService,
         private fuelService: FuelService, private vehicleService: VehicleService) { }
@@ -66,10 +37,10 @@ export class DashboardComponent implements OnInit {
             this.dashboardService.getTopStats().subscribe(data => {
                 this.buildTopStats(data.topStats);
             });
+        });
 
-            this.vehicleService.getVehicles().subscribe(vehicles => {
-                this.buildConsumptionCharts(vehicles.vehicles);
-            });
+        this.vehicleService.getVehicles().subscribe(vehicles => {
+            this.vehicles = vehicles.vehicles;
         });
     }
 
@@ -80,35 +51,6 @@ export class DashboardComponent implements OnInit {
         this.totalDistance = this.sumDistance(this.dashboardTopStats);
         this.totalFillUps = this.sumFillUps(this.dashboardTopStats);
         this.totalSpent = this.sumSpend(this.dashboardTopStats);
-    }
-
-    private buildConsumptionCharts(vehicles: Vehicle[]) {
-
-        for (const vehicle of vehicles) {
-
-            const vehicleChartData = {
-
-                labels: [],
-                vehicleName: vehicle.name,
-                dataset: [
-                    {
-                        data: [],
-                        label: this.userPreferences.fuelConsumptionUnit.unitName,
-                    }
-                ]
-            };
-
-            this.fuelService.getFuelForVehicle(vehicle.id, this.userPreferences).subscribe(fuel => {
-
-                for (let i = 1; i < fuel.fuel.length; i++) {
-
-                    vehicleChartData.labels.push('');
-                    vehicleChartData.dataset[0].data.push(fuel.fuel[i].consumption);
-                }
-
-                this.chartData.push(vehicleChartData);
-            });
-        }
     }
 
     private sumDistance(stats: DashboardTopStats[]) {

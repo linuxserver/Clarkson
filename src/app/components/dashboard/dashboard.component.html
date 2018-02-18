@@ -59,21 +59,27 @@
         </div>
     </div>
 
-    <div class="row mt-2" *ngFor="let chart of chartData">
+    <div class="row mt-5">
         <div class="col-12">
+            <h3>Fuel Consumption</h3>
+        </div>
+    </div>
 
-            <div class="card bg-secondary mb-3">
-                <div class="card-header">Fuel Consumption ({{chart.vehicleName}})</div>
-                <div class="card-body">
-                    <canvas baseChart height="400"
-                        [options]="chartOptions"
-                        [datasets]="chart.dataset"
-                        [labels]="chart.labels"
-                        [chartType]="chartType">
-                    </canvas>
-                </div>
-            </div>
+    <div class="row mt-2" *ngFor="let vehicle of vehicles">
+        <div class="col-12">
+            <app-consumption-chart [vehicle]="vehicle" [userPreferences]="userPreferences"></app-consumption-chart>
+        </div>
+    </div>
 
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Monthly Costs</h3>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-12">
+            <app-monthly-fuel-costs-chart></app-monthly-fuel-costs-chart>
         </div>
     </div>
 </div>

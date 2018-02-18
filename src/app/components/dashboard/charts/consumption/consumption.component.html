@@ -1,0 +1,10 @@
+<div class="card bg-secondary mb-3" *ngIf="chartData">
+    <div class="card-body">
+        <canvas baseChart height="400"
+            [options]="chartOptions"
+            [datasets]="chartData.dataset"
+            [labels]="chartData.labels"
+            [chartType]="chartType">
+        </canvas>
+    </div>
+</div>

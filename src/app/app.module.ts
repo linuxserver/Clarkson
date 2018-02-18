@@ -20,6 +20,8 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { FuelListComponent } from './components/fuel-list/fuel-list.component';
 import { FillUpsComponent } from './components/fill-ups/fill-ups.component';
 import { FuelLogEditComponent } from './components/fuel-log-edit/fuel-log-edit.component';
+import { ConsumptionComponent } from './components/dashboard/charts/consumption/consumption.component';
+import { MonthlyFuelCostsComponent } from './components/dashboard/charts/monthly-fuel-costs/monthly-fuel-costs.component';
 
 import { VehicleService } from './services/vehicle.service';
 import { ApiService } from './services/api.service';
@@ -41,6 +43,8 @@ import { UnauthorisedResponseInterceptor } from './interceptors/unauthorised-res
         VehiclesComponent,
         LoginComponent,
         DashboardComponent,
+        ConsumptionComponent,
+        MonthlyFuelCostsComponent,
         NavComponent,
         PageNotFoundComponent,
         RegisterComponent,

@@ -4,9 +4,14 @@ import { Fuel } from './fuel';
 import { FuelType } from './fuel-type';
 import { UserPreferences, Unit, CurrencyUnit } from './user-preferences';
 import { DashboardTopStats } from './dashboard-top-stats';
+import { DashboardMonthlyFuelCosts } from './dashboard-monthly-fuel-costs';
 
 export class DashboardTopStatsApiResponse {
     topStats: DashboardTopStats[];
+}
+
+export class DashboardMonthlyFuelCostsApiResponse {
+    monthlyFuelCosts: DashboardMonthlyFuelCosts[];
 }
 
 export class FuelListApiResponse {
