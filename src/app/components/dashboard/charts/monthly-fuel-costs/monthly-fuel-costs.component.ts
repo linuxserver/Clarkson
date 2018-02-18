@@ -79,7 +79,8 @@ export class MonthlyFuelCostsComponent implements OnInit {
                 });
             }
 
-            this.chartData = vehicleChartData;
         }
+
+        this.chartData = vehicleChartData;
     }
 }
