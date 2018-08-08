@@ -20,6 +20,21 @@ export class UserService {
         return this.apiService.getUser(this.authService.getUserId());
     }
 
+    getAllUsers() {
+        return this.apiService.getAllUsers().map(response => {
+
+            response.users.sort((now, next) => {
+                return now.username > next.username ? 1 : -1;
+            });
+
+            return response;
+        });
+    }
+
+    deleteUser(userId: string) {
+        return this.apiService.deleteUser(userId);
+    }
+
     updateUserPreferences(userId: string, userPreferences: UserPreferences) {
         return this.apiService.updateUserPreferences(userId, userPreferences);
     }

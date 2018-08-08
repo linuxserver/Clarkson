@@ -65,3 +65,7 @@ export class TokenApiResponse {
 export class UserApiResponse {
     user: User;
 }
+
+export class UsersApiResponse {
+    users: User[];
+}

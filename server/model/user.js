@@ -125,13 +125,26 @@ module.exports = (function() {
         });
     };
 
+    remove = function(user, done) {
+
+        db.get().query("CALL User_DeleteById(?)", user, function(error, results) {
+
+            if (error || results[0][0].status === 1) {
+                return done(error);
+            }
+
+            return done(null);
+        });
+    }
+
     return {
         find,
         findAll,
         findByUsername,
         findByEmail,
         create,
-        updatePreferences
+        updatePreferences,
+        remove
     };
 
 }());

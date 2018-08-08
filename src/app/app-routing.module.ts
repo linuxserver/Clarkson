@@ -2,11 +2,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { RegistrationGuard } from './guards/registration.guard';
 
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AdminComponent } from './components/admin/admin.component';
 import { VehiclesComponent } from './components/vehicles/vehicles.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
@@ -26,6 +28,7 @@ const routes: Routes = [
     { path: 'fill-ups/:vehicleId/new', component: FuelLogEditComponent, canActivate: [ AuthGuard ]},
     { path: 'fill-ups/:vehicleId/edit/:id', component: FuelLogEditComponent, canActivate: [ AuthGuard ]},
     { path: 'dashboard', component: DashboardComponent, canActivate: [ AuthGuard ]},
+    { path: 'admin', component: AdminComponent, canActivate: [ AuthGuard, AdminGuard ]},
     { path: '**', component: PageNotFoundComponent }
 ];
 

@@ -63,4 +63,11 @@ router.put("/:id/updatePreferences", [auth.verify, auth.verifyUserAdmin], functi
     });
 });
 
+router.delete("/:id", [auth.verify, auth.verifyUserAdmin], function(req, res) {
+
+    User.remove(req.params.id, function(error) {
+        response.handle(res, { status: "User and data deleted" }, error);        
+    });
+});
+
 module.exports = router;
