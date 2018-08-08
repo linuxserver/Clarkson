@@ -32,6 +32,10 @@ export class AuthService {
         return this.jwtHelper.getUserId(this.getToken());
     }
 
+    public isUserAdmin() {
+        return this.jwtHelper.isUserAdmin(this.getToken());
+    }
+
     private getToken() {
         return localStorage.getItem('token');
     }

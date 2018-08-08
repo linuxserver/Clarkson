@@ -9,6 +9,7 @@ import {
     VehicleApiResponse,
     TokenApiResponse,
     UserApiResponse,
+    UsersApiResponse,
     GenericApiResponse,
     FuelTypesApiResponse,
     FuelListApiResponse,
@@ -86,6 +87,26 @@ export class ApiService {
 
     public getUser(userId: string): Observable<UserApiResponse> {
         return this.httpClient.get<UserApiResponse>(`${this.baseUrl}/user/${userId}`);
+    }
+
+    public getAllUsers(): Observable<UsersApiResponse> {
+        return this.httpClient.get<UsersApiResponse>(`${this.baseUrl}/user`);
+    }
+
+    public deleteUser(userId: string): Observable<GenericApiResponse> {
+        return this.httpClient.delete<GenericApiResponse>(`${this.baseUrl}/user/${userId}`);
+    }
+
+    public clearUserData(userId: string): Observable<GenericApiResponse> {
+        return this.httpClient.delete<GenericApiResponse>(`${this.baseUrl}/user/${userId}/data`);
+    }
+
+    public promoteUser(userId: string): Observable<UserApiResponse> {
+        return this.httpClient.post<UserApiResponse>(`${this.baseUrl}/user/${userId}/promote`, {});
+    }
+
+    public demoteUser(userId: string): Observable<UserApiResponse> {
+        return this.httpClient.post<UserApiResponse>(`${this.baseUrl}/user/${userId}/demote`, {});
     }
 
     public updateUserPreferences(userId: string, userPreferences: UserPreferences): Observable<UserApiResponse> {

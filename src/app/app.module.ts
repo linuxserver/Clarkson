@@ -17,6 +17,9 @@ import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminDeleteComponent } from './components/admin/admin-delete.component';
+import { AdminClearComponent } from './components/admin/admin-clear.component';
 import { FuelListComponent } from './components/fuel-list/fuel-list.component';
 import { FillUpsComponent } from './components/fill-ups/fill-ups.component';
 import { FuelLogEditComponent } from './components/fuel-log-edit/fuel-log-edit.component';
@@ -32,6 +35,7 @@ import { FuelService } from './services/fuel.service';
 import { DashboardService } from './services/dashboard.service';
 
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 import { RegistrationGuard } from './guards/registration.guard';
 
 import { TokenInterceptor } from './interceptors/token.interceptor';
@@ -50,6 +54,9 @@ import { UnauthorisedResponseInterceptor } from './interceptors/unauthorised-res
         RegisterComponent,
         VehicleEditComponent,
         SettingsComponent,
+        AdminComponent,
+        AdminDeleteComponent,
+        AdminClearComponent,
         FuelListComponent,
         FillUpsComponent,
         FuelLogEditComponent
@@ -71,6 +78,7 @@ import { UnauthorisedResponseInterceptor } from './interceptors/unauthorised-res
         FuelService,
         DashboardService,
         AuthGuard,
+        AdminGuard,
         RegistrationGuard,
         {
             provide: HTTP_INTERCEPTORS,

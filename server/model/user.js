@@ -2,7 +2,8 @@ var db = require("../db/mysql");
 
 module.exports = (function() {
 
-    var find, findAll, findByUsername, findByEmail, create, updatePreferences;
+    var find, findAll, findByUsername, findByEmail, create, updatePreferences,
+        remove, clearData, promote, demote;
 
     find = function(userId, done) {
 
@@ -125,13 +126,65 @@ module.exports = (function() {
         });
     };
 
+    remove = function(user, done) {
+
+        db.get().query("CALL User_DeleteById(?)", user, function(error, results) {
+
+            if (error || results[0][0].status === 1) {
+                return done(error);
+            }
+
+            return done();
+        });
+    };
+
+    clearData = function(user, done) {
+
+        db.get().query("CALL User_ClearById(?)", user, function(error, results) {
+            
+            if (error || results[0][0].status === 1) {
+                return done(error);
+            }
+
+            return done();
+        });
+    };
+
+    promote = function(user, done) {
+
+        db.get().query("CALL User_PromoteById(?)", user, function(error, results) {
+
+            if (error) {
+                return done(error);
+            }
+
+            return done();
+        });
+    };
+
+    demote = function(user, done) {
+
+        db.get().query("CALL User_DemoteById(?)", user, function(error, results) {
+
+            if (error) {
+                return done(error);
+            }
+
+            return done();
+        });
+    };
+
     return {
         find,
         findAll,
         findByUsername,
         findByEmail,
         create,
-        updatePreferences
+        updatePreferences,
+        remove,
+        clearData,
+        promote,
+        demote
     };
 
 }());

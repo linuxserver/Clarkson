@@ -1,0 +1,74 @@
+<app-nav></app-nav>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="header-title-container">
+                <div class="header-title">
+                    <div class="title">
+                        <h1>Admin</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Users</h3>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-sm-12">
+            <p>Manage users and their data</p>
+        </div>
+
+        <div class="col-sm-12">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        <th scope="col" class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td>{{user.username}}</td>
+                        <td>
+                            <span *ngIf="user.admin"><i class="fas fa-user-shield"></i>&nbsp;Admin</span>
+                            <span *ngIf="!user.admin"><i class="fas fa-user"></i>&nbsp;User</span>
+                        </td>
+                        <td class="text-right">
+
+                            <span *ngIf="!isUserYou(user) && !isUserAdmin(user)">
+                                <button type="button" class="btn btn-sm btn-success" title="Promotes user to an admin" (click)="promote(user)"><i class="fas fa-arrow-circle-up"></i>&nbsp;Promote</button>
+                            </span>
+                            <span *ngIf="!isUserYou(user) && isUserAdmin(user)">
+                                    <button type="button" class="btn btn-sm btn-warning" title="Demotes admin to standard user" (click)="demote(user)"><i class="fas fa-arrow-circle-down"></i>&nbsp;Demote</button>
+                                </span>
+                            <button type="button" class="btn btn-sm btn-info" title="Clears all user data but keeps the user intact" (click)="selectUser(user)" data-toggle="modal" data-target="#adminClearModal"><i class="fas fa-sync-alt"></i>&nbsp;Clear Data</button>
+                            <span *ngIf="isUserYou(user)">
+                                <button type="button" class="btn btn-sm btn-danger" title="You cannot delete yourself. Get another admin user to do so." disabled><i class="fas fa-trash"></i>&nbsp;Delete</button>
+                            </span>
+                            <span *ngIf="!isUserYou(user)">
+                                <button type="button" class="btn btn-sm btn-danger" title="Removes the user including their data" (click)="selectUser(user)" data-toggle="modal" data-target="#adminDeleteModal"><i class="fas fa-trash"></i>&nbsp;Delete</button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<app-admin-delete [user]="selectedUser" (deleteSuccess)="removeUser($event)"></app-admin-delete>
+<app-admin-clear [user]="selectedUser" (clearSuccess)="clearUser($event)"></app-admin-clear>

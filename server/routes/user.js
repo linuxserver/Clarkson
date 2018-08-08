@@ -52,7 +52,7 @@ router.get("/:id", [auth.verify, auth.verifyUserAdmin], function(req, res) {
             delete user.password;
         }
 
-        response.handle(res, { "user": user }, error);
+        response.handle(res, { user }, error);
     });
 });
 
@@ -60,6 +60,58 @@ router.put("/:id/updatePreferences", [auth.verify, auth.verifyUserAdmin], functi
 
     User.updatePreferences(req.params.id, req.body, function(error) {
         response.handle(res, { status: "Preferences updated" }, error);
+    });
+});
+
+router.delete("/:id", [auth.verify, auth.verifyUserAdmin], function(req, res) {
+
+    User.remove(req.params.id, function(error) {
+        response.handle(res, { status: "User and data deleted" }, error);        
+    });
+});
+
+router.delete("/:id/data", [auth.verify, auth.verifyUserAdmin], function(req, res) {
+
+    User.clearData(req.params.id, function(error) {
+        response.handle(res, { status: "Data deleted" }, error);        
+    });
+});
+
+router.post("/:id/promote", [auth.verify, auth.verifyAdminOnly], function(req, res) {
+
+    User.promote(req.params.id, function(error) {
+
+        if (error) {
+            return response.handle(res, {}, error);
+        }
+
+        User.find(req.params.id, function(error, user) {
+
+            if (user) {
+                delete user.password;
+            }
+    
+            response.handle(res, { user }, error);
+        });
+    });
+});
+
+router.post("/:id/demote", [auth.verify, auth.verifyAdminOnly], function(req, res) {
+
+    User.demote(req.params.id, function(error) {
+
+        if (error) {
+            return response.handle(res, {}, error);
+        }
+
+        User.find(req.params.id, function(error, user) {
+
+            if (user) {
+                delete user.password;
+            }
+    
+            response.handle(res, { user }, error);
+        });
     });
 });
 

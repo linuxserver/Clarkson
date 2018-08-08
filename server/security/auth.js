@@ -25,6 +25,15 @@ module.exports = (function() {
             }
         },
 
+        verifyAdminOnly(req, res, next) {
+
+            if (req.token.admin) {
+                next();
+            } else {
+                return response.forbidden(res, "Only admins are permitted to carry out this operation");
+            }
+        },
+
         verify(req, res, next) {
 
             var authHeader = req.headers.authorization;

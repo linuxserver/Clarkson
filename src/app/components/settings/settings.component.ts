@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { UnitService } from '../../services/unit.service';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 import { UserPreferences, Unit, CurrencyUnit } from '../../model/user-preferences';
+import { User } from '../../model/user';
 
 @Component({
     selector: 'app-settings',
@@ -16,6 +19,7 @@ export class SettingsComponent implements OnInit {
     public userPreferencesForm: FormGroup;
     public userPreferences: UserPreferences;
     public userId: string;
+    public user: User;
 
     public fuelUnits: Unit[];
     public fuelConsumptionUnits: Unit[];
@@ -25,8 +29,8 @@ export class SettingsComponent implements OnInit {
     public preferencesUpdateSuccess: boolean;
     public preferencesUpdateFailure: boolean;
 
-    constructor(private formBuilder: FormBuilder, private unitService: UnitService, private userService: UserService,
-        private flashMessageService: FlashMessagesService) {
+    constructor(private formBuilder: FormBuilder, private authService: AuthService, private unitService: UnitService,
+        private userService: UserService, private router: Router, private flashMessageService: FlashMessagesService) {
 
         this.userPreferencesForm = formBuilder.group({
 
@@ -41,6 +45,7 @@ export class SettingsComponent implements OnInit {
 
         this.userService.getUser().subscribe(data => {
 
+            this.user = data.user;
             this.userId = data.user.id;
             this.userPreferences = data.user.preferences;
         });
@@ -73,5 +78,15 @@ export class SettingsComponent implements OnInit {
                 this.flashMessageService.show('Unable to update settings.', { cssClass: 'alert-danger' });
             }
         );
+    }
+
+    public removeUser() {
+
+        this.authService.logOut();
+        this.router.navigate(['/login']);
+    }
+
+    public clearUser(userId: string) {
+        console.log("User data cleared for " + userId);
     }
 }

@@ -15,18 +15,15 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" [routerLink]="['/fill-ups']" routerLinkActive="active"><i class="fas fa-arrow-circle-up"></i>&nbsp;Fill-Ups</a>
             </li>
-            <!-- <li class="nav-item dropdown">
-                <a class="nav-link" [routerLink]="['/costs']" routerLinkActive="active"><i class="fas fa-credit-card"></i>&nbsp;Costs</a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link" [routerLink]="['/settings']" routerLinkActive="active"><i class="fas fa-cog"></i>&nbsp;Settings</a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/donate']"><i class="fab fa-paypal"></i>&nbsp;Donate</a>
-            </li> -->
+            <li class="nav-item" *ngIf="isUserAmin()">
+                <a class="nav-link" [routerLink]="['/admin']" routerLinkActive="active"><i class="fas fa-user-shield"></i>&nbsp;Admin</a>
+            </li>
         </ul>
         <div *ngIf="isUserLoggedIn()" class="my-2 my-lg-0">
-            <button type="button" class="btn btn-primary btn-sm" (click)="logOut()">Logout</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="logOut()"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</button>
         </div>
     </div>
 </nav>
