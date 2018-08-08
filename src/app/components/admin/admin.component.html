@@ -51,7 +51,7 @@
                             <span *ngIf="!isUserYou(user) && !isUserAdmin(user)">
                                 <button type="button" class="btn btn-sm btn-success" title="Promotes user to an admin" (click)="selectUser(user)" data-toggle="modal" data-target="#adminPromoteModal"><i class="fas fa-arrow-circle-up"></i>&nbsp;Promote</button>
                             </span>
-                            <button type="button" class="btn btn-sm btn-info" title="Clears all user data but keeps the user intact"><i class="fas fa-sync-alt"></i>&nbsp;Clear Data</button>
+                            <button type="button" class="btn btn-sm btn-info" title="Clears all user data but keeps the user intact" (click)="selectUser(user)" data-toggle="modal" data-target="#adminClearModal"><i class="fas fa-sync-alt"></i>&nbsp;Clear Data</button>
                             <span *ngIf="isUserYou(user)">
                                 <button type="button" class="btn btn-sm btn-danger" title="You cannot delete yourself. Get another admin user to do so." disabled><i class="fas fa-trash"></i>&nbsp;Delete</button>
                             </span>
@@ -65,5 +65,7 @@
         </div>
     </div>
 
-    <app-admin-delete [user]="selectedUser" (deleteSuccess)="removeUser($event)"></app-admin-delete>
 </div>
+
+<app-admin-delete [user]="selectedUser" (deleteSuccess)="removeUser($event)"></app-admin-delete>
+<app-admin-clear [user]="selectedUser" (clearSuccess)="clearUser($event)"></app-admin-clear>

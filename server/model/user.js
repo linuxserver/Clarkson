@@ -135,7 +135,19 @@ module.exports = (function() {
 
             return done(null);
         });
-    }
+    };
+
+    clearData = function(user, done) {
+
+        db.get().query("CALL User_ClearById(?)", user, function(error, results) {
+            
+            if (error || results[0][0].status === 1) {
+                return done(error);
+            }
+
+            return done(null);
+        });
+    };
 
     return {
         find,
@@ -144,7 +156,8 @@ module.exports = (function() {
         findByEmail,
         create,
         updatePreferences,
-        remove
+        remove,
+        clearData
     };
 
 }());

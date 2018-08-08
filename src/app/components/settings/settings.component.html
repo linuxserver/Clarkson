@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container mb-5">
 
         <div class="row" *ngIf="userPreferences && fuelUnits?.length > 0">
             <div class="col-12">
@@ -82,3 +82,44 @@
         </div>
     </div>
 </form>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-sm-12">
+            <h3>Your Data</h3>
+        </div>
+        <div class="col-sm-12">
+            Manage your data by either clearing your previous logs and vehicles, or deleting your entire user altogether.
+        </div> 
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h5>Clear all data</h5>
+            <p>
+                Clearing all data for this user will remove all vehicles, fuel logs and any other loggable data. You will <em>not</em> be able to recover this data. This does not reset any unit preferences.
+            </p>
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-info" title="Clears all user data but keeps the user intact" data-toggle="modal" data-target="#adminClearModal"><i class="fas fa-sync-alt"></i>&nbsp;Clear Data</button>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h5>Delete user</h5>
+            <p>
+                Danger zone: Deleting this user will purge all data relating to this user from Clarkson. If you delete yourself, you will <em>not</em> be able to recover the data.
+            </p>
+        </div>
+        <div class="col-12">
+            <button type="button" class="btn btn-danger" title="Removes this user and all of its data" data-toggle="modal" data-target="#adminDeleteModal"><i class="fas fa-trash"></i>&nbsp;Delete</button>
+        </div>
+    </div>
+</div>
+
+<app-admin-delete [user]="user" (deleteSuccess)="removeUser($event)"></app-admin-delete>
+<app-admin-clear [user]="user" (clearSuccess)="clearUser($event)"></app-admin-clear>

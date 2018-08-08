@@ -19,6 +19,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { SettingsComponent } from './components/settings/settings.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { AdminDeleteComponent } from './components/admin/admin-delete.component';
+import { AdminClearComponent } from './components/admin/admin-clear.component';
 import { FuelListComponent } from './components/fuel-list/fuel-list.component';
 import { FillUpsComponent } from './components/fill-ups/fill-ups.component';
 import { FuelLogEditComponent } from './components/fuel-log-edit/fuel-log-edit.component';
@@ -55,6 +56,7 @@ import { UnauthorisedResponseInterceptor } from './interceptors/unauthorised-res
         SettingsComponent,
         AdminComponent,
         AdminDeleteComponent,
+        AdminClearComponent,
         FuelListComponent,
         FillUpsComponent,
         FuelLogEditComponent

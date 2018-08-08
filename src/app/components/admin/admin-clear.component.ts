@@ -16,19 +16,19 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../model/user';
 
 @Component({
-    selector: 'app-admin-delete',
-    templateUrl: './admin-delete.component.html'
+    selector: 'app-admin-clear',
+    templateUrl: './admin-clear.component.html'
 })
-export class AdminDeleteComponent implements OnInit {
+export class AdminClearComponent implements OnInit {
 
     @Input()
     public user: User;
 
-    @ViewChild('closeAdminDeleteModal')
-    public closeAdminDeleteModal: ElementRef;
+    @ViewChild('closeAdminClearModal')
+    public closeAdminClearModal: ElementRef;
 
     @Output()
-    public deleteSuccess: EventEmitter<string> = new EventEmitter();
+    public clearSuccess: EventEmitter<string> = new EventEmitter();
 
     constructor(private userService: UserService, private flashMessageService: FlashMessagesService) {
     }
@@ -38,18 +38,18 @@ export class AdminDeleteComponent implements OnInit {
     }
 
     public closeModal() {
-        this.closeAdminDeleteModal.nativeElement.click();
+        this.closeAdminClearModal.nativeElement.click();
     }
 
-    public delete() {
+    public clearData() {
 
-        this.userService.deleteUser(this.user.id).subscribe(
+        this.userService.clearUserData(this.user.id).subscribe(
 
             data => {
 
                 this.closeModal();
-                this.deleteSuccess.emit(this.user.id);
-                this.flashMessageService.show('User deleted.', { cssClass: 'alert-success' });
+                this.clearSuccess.emit(this.user.id);
+                this.flashMessageService.show('User data cleared.', { cssClass: 'alert-success' });
             },
 
             err => {
@@ -59,6 +59,6 @@ export class AdminDeleteComponent implements OnInit {
     }
 
     public showErrorMessage(error: any) {
-        this.flashMessageService.show('Error while deleting user. Reason: ' + error, { cssClass: 'alert-danger' });
+        this.flashMessageService.show('Error while clearing data. Reason: ' + error, { cssClass: 'alert-danger' });
     }
 }

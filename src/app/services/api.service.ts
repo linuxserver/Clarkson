@@ -97,6 +97,10 @@ export class ApiService {
         return this.httpClient.delete<GenericApiResponse>(`${this.baseUrl}/user/${userId}`);
     }
 
+    public clearUserData(userId: string): Observable<GenericApiResponse> {
+        return this.httpClient.delete<GenericApiResponse>(`${this.baseUrl}/user/${userId}/data`);
+    }
+
     public updateUserPreferences(userId: string, userPreferences: UserPreferences): Observable<UserApiResponse> {
         return this.httpClient.put<UserApiResponse>(`${this.baseUrl}/user/${userId}/updatePreferences`, userPreferences);
     }

@@ -70,4 +70,11 @@ router.delete("/:id", [auth.verify, auth.verifyUserAdmin], function(req, res) {
     });
 });
 
+router.delete("/:id/data", [auth.verify, auth.verifyUserAdmin], function(req, res) {
+
+    User.clearData(req.params.id, function(error) {
+        response.handle(res, { status: "Data deleted" }, error);        
+    });
+});
+
 module.exports = router;

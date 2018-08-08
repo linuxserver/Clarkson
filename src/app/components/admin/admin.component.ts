@@ -20,8 +20,6 @@ export class AdminComponent implements OnInit {
 
     ngOnInit() {
 
-        this.selectUser(new User());
-
         this.userService.getAllUsers().subscribe(response => {
             this.users = response.users;
         });
@@ -41,5 +39,9 @@ export class AdminComponent implements OnInit {
 
     public removeUser(userId: string) {
         this.users = this.users.filter(u => u.id !== userId);
+    }
+
+    public clearUser(userId: string) {
+        console.log("User data cleared for " + userId);
     }
 }
