@@ -4,8 +4,6 @@ import {
     Input,
     Output,
     EventEmitter,
-    AfterViewChecked,
-    ChangeDetectorRef,
     ViewChild,
     ElementRef
 } from '@angular/core';

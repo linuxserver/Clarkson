@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit {
     public users: User[];
     public selectedUser: User;
 
-    constructor(private authService: AuthService, private userService: UserService) {
+    constructor(private authService: AuthService, private userService: UserService, private flashMessageService: FlashMessagesService) {
     }
 
     ngOnInit() {
@@ -41,7 +41,54 @@ export class AdminComponent implements OnInit {
         this.users = this.users.filter(u => u.id !== userId);
     }
 
+    public promote(user: User) {
+
+        this.userService.promoteUser(user.id).subscribe(
+            
+            response => {
+
+                const index = this.users.findIndex(u => u.id === response.user.id);
+
+                if (index > -1) {
+                    this.users[index] = response.user;
+                }
+            },
+
+            error => {
+                this.showErrorMessage(error);
+            }
+        );
+    }
+
+    public demote(user: User) {
+
+        this.userService.demoteUser(user.id).subscribe(
+            
+            response => {
+
+                const index = this.users.findIndex(u => u.id === response.user.id);
+
+                if (index > -1) {
+                    this.users[index] = response.user;
+                }
+            },
+
+            error => {
+                this.showErrorMessage(error);
+            }
+        );
+    }
+
     public clearUser(userId: string) {
         console.log("User data cleared for " + userId);
+    }
+
+    public showErrorMessage(err: any) {
+
+        if (typeof err.error.message === 'string') {
+            this.flashMessageService.show(err.error.message, { cssClass: 'alert-danger' });
+        } else {
+            this.flashMessageService.show(err.error.message.sqlMessage, { cssClass: 'alert-danger' });
+        }
     }
 }

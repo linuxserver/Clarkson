@@ -101,6 +101,14 @@ export class ApiService {
         return this.httpClient.delete<GenericApiResponse>(`${this.baseUrl}/user/${userId}/data`);
     }
 
+    public promoteUser(userId: string): Observable<UserApiResponse> {
+        return this.httpClient.post<UserApiResponse>(`${this.baseUrl}/user/${userId}/promote`, {});
+    }
+
+    public demoteUser(userId: string): Observable<UserApiResponse> {
+        return this.httpClient.post<UserApiResponse>(`${this.baseUrl}/user/${userId}/demote`, {});
+    }
+
     public updateUserPreferences(userId: string, userPreferences: UserPreferences): Observable<UserApiResponse> {
         return this.httpClient.put<UserApiResponse>(`${this.baseUrl}/user/${userId}/updatePreferences`, userPreferences);
     }

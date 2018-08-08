@@ -52,7 +52,7 @@ router.get("/:id", [auth.verify, auth.verifyUserAdmin], function(req, res) {
             delete user.password;
         }
 
-        response.handle(res, { "user": user }, error);
+        response.handle(res, { user }, error);
     });
 });
 
@@ -74,6 +74,44 @@ router.delete("/:id/data", [auth.verify, auth.verifyUserAdmin], function(req, re
 
     User.clearData(req.params.id, function(error) {
         response.handle(res, { status: "Data deleted" }, error);        
+    });
+});
+
+router.post("/:id/promote", [auth.verify, auth.verifyAdminOnly], function(req, res) {
+
+    User.promote(req.params.id, function(error) {
+
+        if (error) {
+            return response.handle(res, {}, error);
+        }
+
+        User.find(req.params.id, function(error, user) {
+
+            if (user) {
+                delete user.password;
+            }
+    
+            response.handle(res, { user }, error);
+        });
+    });
+});
+
+router.post("/:id/demote", [auth.verify, auth.verifyAdminOnly], function(req, res) {
+
+    User.demote(req.params.id, function(error) {
+
+        if (error) {
+            return response.handle(res, {}, error);
+        }
+
+        User.find(req.params.id, function(error, user) {
+
+            if (user) {
+                delete user.password;
+            }
+    
+            response.handle(res, { user }, error);
+        });
     });
 });
 

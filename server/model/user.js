@@ -2,7 +2,8 @@ var db = require("../db/mysql");
 
 module.exports = (function() {
 
-    var find, findAll, findByUsername, findByEmail, create, updatePreferences;
+    var find, findAll, findByUsername, findByEmail, create, updatePreferences,
+        remove, clearData, promote, demote;
 
     find = function(userId, done) {
 
@@ -133,7 +134,7 @@ module.exports = (function() {
                 return done(error);
             }
 
-            return done(null);
+            return done();
         });
     };
 
@@ -145,7 +146,31 @@ module.exports = (function() {
                 return done(error);
             }
 
-            return done(null);
+            return done();
+        });
+    };
+
+    promote = function(user, done) {
+
+        db.get().query("CALL User_PromoteById(?)", user, function(error, results) {
+
+            if (error) {
+                return done(error);
+            }
+
+            return done();
+        });
+    };
+
+    demote = function(user, done) {
+
+        db.get().query("CALL User_DemoteById(?)", user, function(error, results) {
+
+            if (error) {
+                return done(error);
+            }
+
+            return done();
         });
     };
 
@@ -157,7 +182,9 @@ module.exports = (function() {
         create,
         updatePreferences,
         remove,
-        clearData
+        clearData,
+        promote,
+        demote
     };
 
 }());

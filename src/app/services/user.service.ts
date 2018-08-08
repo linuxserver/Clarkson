@@ -39,6 +39,14 @@ export class UserService {
         return this.apiService.clearUserData(userId);
     }
 
+    promoteUser(userId: string) {
+        return this.apiService.promoteUser(userId);
+    }
+
+    demoteUser(userId: string) {
+        return this.apiService.demoteUser(userId);
+    }
+
     updateUserPreferences(userId: string, userPreferences: UserPreferences) {
         return this.apiService.updateUserPreferences(userId, userPreferences);
     }
