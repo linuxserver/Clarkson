@@ -26,7 +26,7 @@ Clarkson is a web-based dashboard application that gives you a neat and clean in
   - Distance Units: Miles, Kilometres
   - Currency Units: GBP, USD, EUR, AUD, CAD
 
-## Running the application
+## Running the application in standalone mode
 
 Clarkson has an Angular front-end, with ExpressJS backend, connecting to a MySQL database. It uses Flyway as a means of managing incremental migrations of the database schema.
 
@@ -94,6 +94,114 @@ Environment variables at startup:
 | MYSQL_PASSWORD | _Yes_ | The password for the user |
 | ENABLE_REGISTRATIONS | _No_ | **Defaults to _false_**. If set to _true_, allows new users to register |
 | APP_PORT | _No_ | **Defaults to 3000**. Changes the running port of the application |
+
+
+## Running the application with passenger + apache2
+Passenger is an application server which is able to run nodejs applications. It is able to start you nodejs application if needed (ie if a http request for clarkson app arrives ). It is also able to stop it when it's not used anymore.
+
+This section describes the deployement procedure for clarkson to integrate with apache2 + passenger. Clarkon is one of several virtual hosts in apache config. This config is used on a raspberry.
+
+### Install the code
+Login to your machine which acts as the http server. You do not need to login as root. It is assumed that apache2 + passenger are already installed.
+
+- git clone your code
+```bash
+cd /opt
+git clone https://github.com/Max-Z80/Clarkson.git 
+```
+### setup the database
+The idea is to create a specific user for the clarkson app, create the databse and finally create the tables inside.
+
+```bash
+ mysql -u root -h localhost -p
+> CREATE USER '--yourMySQLUser--'@'localhost' IDENTIFIED BY '--yourMySQLUserPassword--';
+> create database clarkson;
+> grant ALL PRIVILEGES on clarkson.* TO 'clarkson'@'localhost';
+> flush privileges;
+```
+Populate the database following the section above `Migrate the database`
+
+
+### Configure apache + passenger
+The following configuration gives access to the app via http://yourdomainOrIP/clarkson.
+
+```bash
+
+<VirtualHost *:80>
+  # if you access your server via an IP address the folowwing line is commented
+ 	ServerName --yourDomain--
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html
+	
+	LogLevel debug
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+# These have been added:
+    Alias "/clarkson" "/opt/Clarkson/dist"
+    <Location /clarkson>
+        PassengerUser --userUsedToInstallTheCode--
+        PassengerGroup --userGroupUsedToInstallTheCode--
+        SetEnv MYSQL_HOST --domainWhereYouDBIsLocatedForExampleLocalhost--
+        SetEnv MYSQL_USERNAME --yourMySQLUser--
+        SetEnv MYSQL_PASSWORD --yourMySQLUserPassword--
+        SetEnv ENABLE_REGISTRATIONS --trueOrFalse-- 
+        SetEnv APP_PORT 80 
+        PassengerBaseURI /clarkson
+        PassengerAppRoot /opt/Clarkson
+
+        PassengerAppType node
+        PassengerStartupFile clarkson.js
+        PassengerNodejs --pathToNodejs--
+    </Location>
+    <Directory /opt/Clarkson/dist>
+        Allow from all
+        Options -MultiViews
+        # Uncomment this if you're on Apache >= 2.4:
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+don't forget to restart apache
+```bash
+sudo /etc/init.d/apache2 restart
+```
+### Configue Clarkson
+edit /src/enviroment/environment.prod.ts
+
+```bash
+export const environment = {
+    production: true,
+    apiBaseUrl: 'http://--YOUR_IP_orDOMAIN--/clarkson' + '/api',
+    enableRegistrations: true
+};
+```
+
+### Install Clarkson's dependencies
+To get the application running, you'll need `node` and `npm` installed. Firstly, install the angular-cli (plus ts dependencies):
+
+```bash
+npm install -g @angular/cli ts-node typescript
+```
+
+Then grab all of the dependencies for the app itself:
+
+```bash
+npm install
+```
+
+### Compile the code
+The key point here is to change the <base> html element value in your /dist/index.html such that images , css files and js files are properly rooted by apache/passenger to the proper folder.
+```bash
+ng build --prod --base-href /clarkson
+```
+This will create a `dist/` directory, which is where the frontend gets served.
+
+### That's it
+You should be able to access Clarkson with you browser pointing to:
+http://---yourIPOrDomain--/clarkson
 
 ## Credits
 
