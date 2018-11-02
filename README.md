@@ -165,7 +165,7 @@ The following configuration gives access to the app via http://yourdomainOrIP/cl
 </VirtualHost>
 ```
 Notes:
-- You see that the enviroment variables which are required to start clarkson in the standalone mode are provided here. Note that the port env var is not provided. You may ask why ? Well passenger will interact with clarkson app via an unix socket which short circuit the tcp connexion. So there is no tcp connexion between clarkson and passenger so the port parameter is useless. This is one of passengers features.
+- You see that the enviroment variables which are required to start clarkson in the standalone mode are provided here. Note that the port env var is not provided. You may ask why ? Well passenger will interact with clarkson app via an unix socket which short circuit the tcp connexion. [more here](https://www.phusionpassenger.com/library/indepth/nodejs/reverse_port_binding.html) So there is no tcp connexion between clarkson and passenger so the port parameter is useless. This is one of passengers features.
 - The environment variable called PassengerBaseURI is transmitted to the app too. It is used by the server to adapt to the production environment. Indeed, when this value is provided, the express server of Clarkson adds '/clarkson' in front on all the API calls. As far as I understood, passenger itself is not able to remove this string from the incoming requests before they are served to the clarkson app. [related issue](  https://github.com/phusion/passenger/issues/1637).
 
 Don't forget to restart apache
