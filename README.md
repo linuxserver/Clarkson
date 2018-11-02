@@ -149,7 +149,7 @@ The following configuration gives access to the app via http://yourdomainOrIP/cl
         SetEnv MYSQL_PASSWORD --yourMySQLUserPassword--
         SetEnv ENABLE_REGISTRATIONS --trueOrFalse-- 
         SetEnv APP_PORT 80 
-        PassengerBaseURI /clarkson
+        SetEnv PassengerBaseURI /clarkson
         PassengerAppRoot /opt/Clarkson
 
         PassengerAppType node
