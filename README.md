@@ -26,7 +26,7 @@ Clarkson is a web-based dashboard application that gives you a neat and clean in
   - Distance Units: Miles, Kilometres
   - Currency Units: GBP, USD, EUR, AUD, CAD
 
-## Running the application
+## Running the application in standalone mode
 
 Clarkson has an Angular front-end, with ExpressJS backend, connecting to a MySQL database. It uses Flyway as a means of managing incremental migrations of the database schema.
 
