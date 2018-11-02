@@ -97,9 +97,9 @@ Environment variables at startup:
 
 
 ## Running the application with passenger + apache2
-Passenger is an application server which is able to run nodejs applications. It is able to start you nodejs application if needed (ie if a http request for clarkson app arrives ). It is also able to stop it when it's not used anymore.
+Passenger is an application server which is able to run nodejs applications. It is able to start your nodejs application if needed (ie if an http request for clarkson app arrives). It is also able to stop it when it's not used anymore.
 
-This section describes the deployement procedure for clarkson to integrate with apache2 + passenger. Clarkon is one of several virtual hosts in apache config. This config is used on a raspberry.
+This section describes the deployment procedure for clarkson to integrate with apache2 + passenger. Clarkson is one of several virtual hosts in apache config. This config is used on a raspberry.
 
 ### Install the code
 Login to your machine which acts as the http server. You do not need to login as root. It is assumed that apache2 + passenger are already installed.
@@ -109,8 +109,8 @@ Login to your machine which acts as the http server. You do not need to login as
 cd /opt
 git clone https://github.com/Max-Z80/Clarkson.git 
 ```
-### setup the database
-The idea is to create a specific user for the clarkson app, create the databse and finally create the tables inside.
+### Setup the database
+The idea is  -1- to create a specific user for the clarkson app, -2- create the database and -3- create the tables inside.
 
 ```bash
  mysql -u root -h localhost -p
@@ -128,7 +128,7 @@ The following configuration gives access to the app via http://yourdomainOrIP/cl
 ```bash
 
 <VirtualHost *:80>
-  # if you access your server via an IP address the folowwing line is commented
+  # if you access your server via an IP address the following line is commented
  	ServerName --yourDomain--
 
 	ServerAdmin webmaster@localhost
