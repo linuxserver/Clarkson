@@ -148,7 +148,7 @@ The following configuration gives access to the app via http://yourdomainOrIP/cl
         SetEnv MYSQL_USERNAME --yourMySQLUser--
         SetEnv MYSQL_PASSWORD --yourMySQLUserPassword--
         SetEnv ENABLE_REGISTRATIONS --trueOrFalse-- 
-        SetEnv APP_PORT 80 
+        
         SetEnv PassengerBaseURI /clarkson
         PassengerAppRoot /opt/Clarkson
 
@@ -164,7 +164,12 @@ The following configuration gives access to the app via http://yourdomainOrIP/cl
     </Directory>
 </VirtualHost>
 ```
-don't forget to restart apache
+Notes:
+- You see that the enviroment variables which are required to start clarkson in the standalone mode are provided here. Note that the port env var is not provided. You may ask why ? Well passenger will interact with clarkson app via an unix socket which short circuit the tcp connexion. So there is no tcp connexion between clarkson and passenger so the port parameter is useless. This is one of passengers features.
+- The environment variable called PassengerBaseURI is transmitted to the app too. It is used by the server to adapt to the production environment. Indeed, when this value is provided, the express server of Clarkson adds '/clarkson' in front on all the API calls. As far as I understood, passenger itself is not able to remove this string from the incoming requests before they are served to the clarkson app. [related issue](  https://github.com/phusion/passenger/issues/1637).
+
+Don't forget to restart apache
+
 ```bash
 sudo /etc/init.d/apache2 restart
 ```
@@ -202,6 +207,28 @@ This will create a `dist/` directory, which is where the frontend gets served.
 ### That's it
 You should be able to access Clarkson with you browser pointing to:
 http://---yourIPOrDomain--/clarkson
+
+### Troubleshooting
+It could be that the app does not work.
+There are several passenger debugging commands.
+```bash
+passenger-status
+```
+This must work. It was not by default in my case. I add to add the following line in /etc/apache2/apache.conf.
+```bash
+PassengerInstanceRegistryDir --pathToADirectory--
+```
+pathToADirectory is a directory that I have created. Passenger will store important stuff in this folder. Its existance is mandatory.
+
+Then you can also run passenger status as follows:
+```bash
+export PASSENGER_INSTANCE_REGISTRY_DIR=--pathToADirectory--
+passenger-status
+```
+You can also login to mysql CLI and check that clarkson user is connected to the db with:
+```bash
+> show processlist; 
+```
 
 ## Credits
 
