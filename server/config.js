@@ -16,7 +16,9 @@ module.exports = (function() {
 
         auth: {
             jwtSecret: hash.random()
-        }
+        },
+	
+	baseURI: process.env.PassengerBaseURI || ''
     };
 
 }());
