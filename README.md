@@ -195,7 +195,7 @@ npm install
 ### Compile the code
 The key point here is to change the <base> html element value in your /dist/index.html such that images , css files and js files are properly rooted by apache/passenger to the proper folder.
 ```bash
-ng build --prod --base-href /clarkson
+ng build --prod --base-href /clarkson/
 ```
 This will create a `dist/` directory, which is where the frontend gets served.
 
