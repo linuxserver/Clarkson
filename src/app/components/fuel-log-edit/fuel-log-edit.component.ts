@@ -21,12 +21,16 @@ import { UserService } from '../../services/user.service';
 export class FuelLogEditComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     private static dateTimePattern = '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}(:[0-9]{2})?';
+    private static datePattern = '[0-9]{4}-[0-9]{2}-[0-9]{2}?';
 
     private routeSubscription: any;
     private vehicleId: string;
 
     public fuelLog = new Fuel();
+    public today: String;
+
     public userPreferences: UserPreferences;
+
 
     public fuelLogForm: FormGroup;
     public errorResponse: string;
@@ -37,7 +41,7 @@ export class FuelLogEditComponent implements OnInit, OnDestroy, AfterViewChecked
         this.fuelLogForm = formBuilder.group({
 
             'id': [null],
-            'date': [null, [Validators.pattern(FuelLogEditComponent.dateTimePattern)]],
+            'date': [null, [Validators.pattern(FuelLogEditComponent.datePattern)]],
             'fuelAmount': [null, Validators.required],
             'totalCost': [null, Validators.required],
             'fuelUnitCost': [null, Validators.required],
@@ -60,11 +64,14 @@ export class FuelLogEditComponent implements OnInit, OnDestroy, AfterViewChecked
 
             const fuelId = params['id'];
             this.vehicleId = params['vehicleId'];
+            
+            this.today= new Date().toISOString().slice(0,10);
 
             if (undefined !== fuelId) {
 
                 this.fuelService.getFuelLog(fuelId).subscribe(fuelData => {
                     this.fuelLog = fuelData.fuel;
+                    this.fuelLog.date = new Date(this.fuelLog.date).toISOString().slice(0,10);
                 });
             }
         });

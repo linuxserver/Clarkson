@@ -1,129 +1,151 @@
 <app-nav></app-nav>
 <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="header-title-container">
-                <div class="header-title">
-                    <div class="title">
-                        <h1>Edit Fill-Up</h1>
-                    </div>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="header-title-container">
+        <div class="header-title">
+          <div class="title">
+            <h1>Edit Fill-Up</h1>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <form [formGroup]="fuelLogForm" (ngSubmit)="save()">
 
-    <div class="container" *ngIf="userPreferences">
+  <div class="container" *ngIf="userPreferences">
 
-        <div class="row">
-            <div class="col-sm-6" *ngIf="fuelLog.id !== undefined">
-                <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['date'].valid}">
-                    <label for="date">Date</label>
-                    <input type="datetime-local" [(ngModel)]="fuelLog.date" [formControl]="fuelLogForm.controls['date']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['date'].valid && fuelLogForm.controls['date'].touched}" class="form-control" />
-                    <div class="invalid-feedback" *ngIf="!fuelLogForm.controls['date'].valid && fuelLogForm.controls['date'].touched">Must be a valid date</div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['fuelAmount'].valid}">
-                    <label for="fuelAmount">Fuel Amount</label>
-                    <div class="input-group">
-                        <input type="number" [(ngModel)]="fuelLog.fuelAmount" [formControl]="fuelLogForm.controls['fuelAmount']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['fuelAmount'].valid && fuelLogForm.controls['fuelAmount'].touched}" class="form-control"
-                        />
-                        <div class="input-group-append">
-                            <span class="input-group-text">{{userPreferences?.fuelUnit.unitName}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="row">
+      <div class="col-sm-6" *ngIf="fuelLog.id !== undefined">
+        <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['date'].valid}">
+          <label for="date">Date</label>
+          <input type="date" [(ngModel)]="fuelLog.date" [formControl]="fuelLogForm.controls['date']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['date'].valid && fuelLogForm.controls['date'].touched}"
+            class="form-control" />
+          <div class="invalid-feedback" *ngIf="!fuelLogForm.controls['date'].valid && fuelLogForm.controls['date'].touched">Must
+            be a valid date</div>
         </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['fuelUnitCost'].valid}">
-                    <label for="fuelUnitCost">Cost per {{userPreferences?.fuelUnit.unit}}</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" [innerHTML]="userPreferences?.currencyUnit.symbol"></span>
-                        </div>
-                        <input type="number" (change)="calculateTotalCost()" [(ngModel)]="fuelLog.fuelUnitCost" [formControl]="fuelLogForm.controls['fuelUnitCost']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['fuelUnitCost'].valid && fuelLogForm.controls['fuelUnitCost'].touched}"
-                            class="form-control" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['totalCost'].valid}">
-                    <label for="totalCost">Total Cost</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" [innerHTML]="userPreferences?.currencyUnit.symbol"></span>
-                        </div>
-                        <input type="number" (change)="calculateFuelUnit()" [(ngModel)]="fuelLog.totalCost" [formControl]="fuelLogForm.controls['totalCost']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['totalCost'].valid && fuelLogForm.controls['totalCost'].touched}"
-                            class="form-control" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['odometerReading'].valid}">
-                    <label for="odometerReading">Odometer</label>
+      </div>
 
-                    <div class="input-group">
-                        <input type="number" [(ngModel)]="fuelLog.odometerReading" [formControl]="fuelLogForm.controls['odometerReading']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['odometerReading'].valid && fuelLogForm.controls['odometerReading'].touched}" class="form-control"
-                        />
-                        <div class="input-group-append">
-                            <span class="input-group-text">{{userPreferences?.distanceUnit.unitName}}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" [(ngModel)]="fuelLog.fullTank" id="fullTank" [formControl]="fuelLogForm.controls['fullTank']" class="custom-control-input">
-                        <label class="custom-control-label" for="fullTank">Full Tank</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" [(ngModel)]="fuelLog.missedFillUp" id="missedFillUp" [formControl]="fuelLogForm.controls['missedFillUp']" class="custom-control-input">
-                        <label class="custom-control-label" for="missedFillUp">I didn't log the last fill-up</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="notes">Notes</label>
-                    <textarea class="form-control" [(ngModel)]="fuelLog.notes" [formControl]="fuelLogForm.controls['notes']" rows="3"></textarea>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <input type="hidden" class="form-control is-invalid" />
-                    <div class="invalid-feedback">{{errorResponse}}</div>
-                </div>
-            </div>
-        </div>
+      <div class="col-sm-6" *ngIf="fuelLog.id === undefined">
+        <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['date'].valid}">
+          <label for="date">Date</label>
+          {{today}}
+          {{fuelLogForm.controls['date'].valid}}
 
-        <div class="row">
-
-            <div class="col-12 clearfix p-3">
-                <div class="float-left">
-                    <button *ngIf="!isEmptyOrNull(fuelLog.id)" (click)="delete()" type="button" class="btn btn-danger">Delete</button>
-                </div>
-                <div class="float-right">
-                    <button type="submit" class="btn btn-primary" [disabled]="!fuelLogForm.valid">Save</button>
-                    <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
-                </div>
-            </div>
-
+          <input type="date" [(ngModel)]="today" [formControl]="fuelLogForm.controls['date']" required [ngClass]="{'is-invalid': !fuelLogForm.controls['date'].valid  && fuelLogForm.controls['date'].touched}"
+            class="form-control" />
+          <div class="invalid-feedback" *ngIf="!fuelLogForm.controls['date'].valid  && fuelLogForm.controls['date'].touched">Must
+            be a valid date</div>
         </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['fuelAmount'].valid}">
+          <label for="fuelAmount">Fuel Amount</label>
+          <div class="input-group">
+            <input type="number" [(ngModel)]="fuelLog.fuelAmount" [formControl]="fuelLogForm.controls['fuelAmount']"
+              required [ngClass]="{'is-invalid': !fuelLogForm.controls['fuelAmount'].valid && fuelLogForm.controls['fuelAmount'].touched}"
+              class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{userPreferences?.fuelUnit.unitName}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['fuelUnitCost'].valid}">
+          <label for="fuelUnitCost">Cost per {{userPreferences?.fuelUnit.unit}}</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" [innerHTML]="userPreferences?.currencyUnit.symbol"></span>
+            </div>
+            <input type="number" (change)="calculateTotalCost()" [(ngModel)]="fuelLog.fuelUnitCost" [formControl]="fuelLogForm.controls['fuelUnitCost']"
+              required [ngClass]="{'is-invalid': !fuelLogForm.controls['fuelUnitCost'].valid && fuelLogForm.controls['fuelUnitCost'].touched}"
+              class="form-control" />
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['totalCost'].valid}">
+          <label for="totalCost">Total Cost</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" [innerHTML]="userPreferences?.currencyUnit.symbol"></span>
+            </div>
+            <input type="number" (change)="calculateFuelUnit()" [(ngModel)]="fuelLog.totalCost" [formControl]="fuelLogForm.controls['totalCost']"
+              required [ngClass]="{'is-invalid': !fuelLogForm.controls['totalCost'].valid && fuelLogForm.controls['totalCost'].touched}"
+              class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group" [ngClass]="{'has-danger': !fuelLogForm.controls['odometerReading'].valid}">
+          <label for="odometerReading">Odometer</label>
+
+          <div class="input-group">
+            <input type="number" [(ngModel)]="fuelLog.odometerReading" [formControl]="fuelLogForm.controls['odometerReading']"
+              required [ngClass]="{'is-invalid': !fuelLogForm.controls['odometerReading'].valid && fuelLogForm.controls['odometerReading'].touched}"
+              class="form-control" />
+            <div class="input-group-append">
+              <span class="input-group-text">{{userPreferences?.distanceUnit.unitName}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" [(ngModel)]="fuelLog.fullTank" id="fullTank" [formControl]="fuelLogForm.controls['fullTank']"
+              class="custom-control-input">
+            <label class="custom-control-label" for="fullTank">Full Tank</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" [(ngModel)]="fuelLog.missedFillUp" id="missedFillUp" [formControl]="fuelLogForm.controls['missedFillUp']"
+              class="custom-control-input">
+            <label class="custom-control-label" for="missedFillUp">I didn't log the last fill-up</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea class="form-control" [(ngModel)]="fuelLog.notes" [formControl]="fuelLogForm.controls['notes']" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="form-group">
+          <input type="hidden" class="form-control is-invalid" />
+          <div class="invalid-feedback">{{errorResponse}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="col-12 clearfix p-3">
+        <div class="float-left">
+          <button *ngIf="!isEmptyOrNull(fuelLog.id)" (click)="delete()" type="button" class="btn btn-danger">Delete</button>
+        </div>
+        <div class="float-right">
+          <button type="submit" class="btn btn-primary" [disabled]="!fuelLogForm.valid">Save</button>
+          <button type="button" class="btn btn-secondary" (click)="goBack()">Back</button>
+        </div>
+      </div>
 
     </div>
+
+  </div>
 
 </form>
