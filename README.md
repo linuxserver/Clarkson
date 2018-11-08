@@ -26,7 +26,7 @@ Clarkson is a web-based dashboard application that gives you a neat and clean in
   - Distance Units: Miles, Kilometres
   - Currency Units: GBP, USD, EUR, AUD, CAD
 
-## Running the application
+## Running the application in standalone mode
 
 Clarkson has an Angular front-end, with ExpressJS backend, connecting to a MySQL database. It uses Flyway as a means of managing incremental migrations of the database schema.
 
@@ -94,6 +94,141 @@ Environment variables at startup:
 | MYSQL_PASSWORD | _Yes_ | The password for the user |
 | ENABLE_REGISTRATIONS | _No_ | **Defaults to _false_**. If set to _true_, allows new users to register |
 | APP_PORT | _No_ | **Defaults to 3000**. Changes the running port of the application |
+
+
+## Running the application with passenger + apache2
+Passenger is an application server which is able to run nodejs applications. It is able to start your nodejs application if needed (ie if an http request for clarkson app arrives). It is also able to stop it when it's not used anymore.
+
+This section describes the deployment procedure for clarkson to integrate with apache2 + passenger. Clarkson is one of several virtual hosts in apache config. This config is used on a raspberry.
+
+### Install the code
+Login to your machine which acts as the http server. You do not need to login as root. It is assumed that apache2 + passenger are already installed.
+
+- git clone your code
+```bash
+cd /opt
+git clone https://github.com/Max-Z80/Clarkson.git 
+```
+### Setup the database
+The idea is  -1- to create a specific user for the clarkson app, -2- create the database and -3- create the tables inside.
+
+```bash
+ mysql -u root -h localhost -p
+> CREATE USER '--yourMySQLUser--'@'localhost' IDENTIFIED BY '--yourMySQLUserPassword--';
+> create database clarkson;
+> grant ALL PRIVILEGES on clarkson.* TO 'clarkson'@'localhost';
+> flush privileges;
+```
+Populate the database following the section above `Migrate the database`
+
+
+### Configure apache + passenger
+The following configuration gives access to the app via http://yourdomainOrIP/clarkson.
+
+```bash
+
+<VirtualHost *:80>
+  # if you access your server via an IP address the following line is commented
+ 	ServerName --yourDomain--
+
+	ServerAdmin webmaster@localhost
+	DocumentRoot /var/www/html
+	
+	LogLevel debug
+
+	ErrorLog ${APACHE_LOG_DIR}/error.log
+	CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+# These have been added:
+    Alias "/clarkson" "/opt/Clarkson/dist"
+    <Location /clarkson>
+        PassengerUser --userUsedToInstallTheCode--
+        PassengerGroup --userGroupUsedToInstallTheCode--
+        SetEnv MYSQL_HOST --domainWhereYouDBIsLocatedForExampleLocalhost--
+        SetEnv MYSQL_USERNAME --yourMySQLUser--
+        SetEnv MYSQL_PASSWORD --yourMySQLUserPassword--
+        SetEnv ENABLE_REGISTRATIONS --trueOrFalse-- 
+        
+        SetEnv PassengerBaseURI /clarkson
+        PassengerAppRoot /opt/Clarkson
+
+        PassengerAppType node
+        PassengerStartupFile clarkson.js
+        PassengerNodejs --pathToNodejs--
+    </Location>
+    <Directory /opt/Clarkson/dist>
+        Allow from all
+        Options -MultiViews
+        # Uncomment this if you're on Apache >= 2.4:
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+Notes:
+- You see that the enviroment variables which are required to start clarkson in the standalone mode are provided here. Note that the port env var is not provided. You may ask why ? Well passenger will interact with clarkson app via an unix socket which short circuit the tcp connexion. [more here](https://www.phusionpassenger.com/library/indepth/nodejs/reverse_port_binding.html) So there is no tcp connexion between clarkson and passenger so the port parameter is useless. This is one of passengers features.
+- The environment variable called PassengerBaseURI is transmitted to the app too. It is used by the server to adapt to the production environment. Indeed, when this value is provided, the express server of Clarkson adds '/clarkson' in front on all the API calls. As far as I understood, passenger itself is not able to remove this string from the incoming requests before they are served to the clarkson app. [related issue](  https://github.com/phusion/passenger/issues/1637).
+
+Don't forget to restart apache
+
+```bash
+sudo /etc/init.d/apache2 restart
+```
+### Configue Clarkson
+edit /src/enviroment/environment.prod.ts
+
+```bash
+export const environment = {
+    production: true,
+    apiBaseUrl: 'http://--YOUR_IP_orDOMAIN--/clarkson' + '/api',
+    enableRegistrations: true
+};
+```
+
+### Install Clarkson's dependencies
+To get the application running, you'll need `node` and `npm` installed. Firstly, install the angular-cli (plus ts dependencies):
+
+```bash
+npm install -g @angular/cli ts-node typescript
+```
+
+Then grab all of the dependencies for the app itself:
+
+```bash
+npm install
+```
+
+### Compile the code
+The key point here is to change the <base> html element value in your /dist/index.html such that images , css files and js files are properly rooted by apache/passenger to the proper folder.
+```bash
+ng build --prod --base-href /clarkson/
+```
+This will create a `dist/` directory, which is where the frontend gets served.
+
+### That's it
+You should be able to access Clarkson with you browser pointing to:
+http://---yourIPOrDomain--/clarkson
+
+### Troubleshooting
+It could be that the app does not work.
+There are several passenger debugging commands.
+```bash
+passenger-status
+```
+This must work. It was not by default in my case. I add to add the following line in /etc/apache2/apache.conf.
+```bash
+PassengerInstanceRegistryDir --pathToADirectory--
+```
+pathToADirectory is a directory that I have created. Passenger will store important stuff in this folder. Its existance is mandatory.
+
+Then you can also run passenger status as follows:
+```bash
+export PASSENGER_INSTANCE_REGISTRY_DIR=--pathToADirectory--
+passenger-status
+```
+You can also login to mysql CLI and check that clarkson user is connected to the db with:
+```bash
+> show processlist; 
+```
 
 ## Credits
 

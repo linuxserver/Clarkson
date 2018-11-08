@@ -1,5 +1,5 @@
 export const environment = {
     production: true,
-    apiBaseUrl: window.location.origin + '/api',
+    apiBaseUrl: 'http://YOUR_IP/clarkson' + '/api',
     enableRegistrations: true
 };

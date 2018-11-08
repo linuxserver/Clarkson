@@ -18,18 +18,18 @@ app.use(morgan("combined", {
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Unauthenticated endpoint used for checking user credentials
-app.use("/api/auth", require("./server/routes/auth"));
-app.use("/api/units", require("./server/routes/units"));
-app.use("/api/ping", require("./server/routes/ping"));
+app.use(config.baseURI + "/api/auth", require("./server/routes/auth"));
+app.use(config.baseURI + "/api/units", require("./server/routes/units"));
+app.use(config.baseURI + "/api/ping", require("./server/routes/ping"));
 
 // User endpoint contains a mix of authenticated and unauthenticated endpoints
-app.use("/api/user", require("./server/routes/user"));
+app.use(config.baseURI + "/api/user", require("./server/routes/user"));
 
 // All authenticated endpoints - user must provide a valid JWT in the header
-app.use("/api/vehicle", auth.verify, require("./server/routes/vehicle"));
-app.use("/api/fuel", auth.verify, require("./server/routes/fuel"));
-app.use("/api/cost", auth.verify, require("./server/routes/cost"));
-app.use("/api/dashboard", auth.verify, require("./server/routes/dashboard"));
+app.use(config.baseURI + "/api/vehicle", auth.verify, require("./server/routes/vehicle"));
+app.use(config.baseURI + "/api/fuel", auth.verify, require("./server/routes/fuel"));
+app.use(config.baseURI + "/api/cost", auth.verify, require("./server/routes/cost"));
+app.use(config.baseURI + "/api/dashboard", auth.verify, require("./server/routes/dashboard"));
 
 // Serve the main web app
 app.get("*", function(req, res) {
