@@ -173,7 +173,7 @@ Don't forget to restart apache
 ```bash
 sudo /etc/init.d/apache2 restart
 ```
-### Configue Clarkson
+### Configure Clarkson
 edit /src/enviroment/environment.prod.ts
 
 ```bash
