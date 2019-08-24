@@ -17,7 +17,9 @@ export class ConsumptionConverter {
         const distanceUnitConversion = DistanceUnitConversionFactory.get(distanceUnit, tripDistance);
 
         if ('mpg' === consumptionUnit) {
-            return Math.round((distanceUnitConversion.toMiles() / fuelUnitConversion.toGallons()) * 100) / 100;
+
+            const fuelUnitAsGallons = ('gal' === fuelUnit ? fuelUnitConversion.toGallons() : fuelUnitConversion.toGallonsUS());
+            return Math.round((distanceUnitConversion.toMiles() / fuelUnitAsGallons) * 100) / 100;
         }
 
         if ('l/100km' === consumptionUnit) {
