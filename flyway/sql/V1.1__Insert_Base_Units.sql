@@ -18,3 +18,4 @@ INSERT INTO `CurrencyUnits` (`id`, `unit`, `unitName`, `symbol`) VALUES (5, "CAD
 
 INSERT INTO `FuelConsumptionUnits` (`id`, `unit`, `unitName`) VALUES (1, "mpg", "Miles per Gallon");
 INSERT INTO `FuelConsumptionUnits` (`id`, `unit`, `unitName`) VALUES (2, "l/100km", "Litres per 100 Kilometers");
+INSERT INTO `FuelConsumptionUnits` (`id`, `unit`, `unitName`) VALUES (3, 'mpg (Imperial)', 'Miles per Gallon');

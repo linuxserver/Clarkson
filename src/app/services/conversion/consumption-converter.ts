@@ -22,6 +22,10 @@ export class ConsumptionConverter {
             return Math.round((distanceUnitConversion.toMiles() / fuelUnitAsGallons) * 100) / 100;
         }
 
+        if ('mpg (Imperial)' == consumptionUnit)  {
+            return Math.round((distanceUnitConversion.toMiles() / fuelUnitConversion.toGallons()) * 100) / 100;
+        }
+
         if ('l/100km' === consumptionUnit) {
             return Math.round(((fuelUnitConversion.toLitres() / distanceUnitConversion.toKilometers()) * 100) * 100) / 100;
         }
