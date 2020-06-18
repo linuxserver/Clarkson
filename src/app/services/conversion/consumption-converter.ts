@@ -18,12 +18,8 @@ export class ConsumptionConverter {
 
         if ('mpg' === consumptionUnit) {
 
-            const fuelUnitAsGallons = ('gal' === fuelUnit ? fuelUnitConversion.toGallons() : fuelUnitConversion.toGallonsUS());
+            const fuelUnitAsGallons = ('gal (US)' === fuelUnit ? fuelUnitConversion.toGallonsUS() : fuelUnitConversion.toGallons());
             return Math.round((distanceUnitConversion.toMiles() / fuelUnitAsGallons) * 100) / 100;
-        }
-
-        if ('mpg (Imperial)' == consumptionUnit)  {
-            return Math.round((distanceUnitConversion.toMiles() / fuelUnitConversion.toGallons()) * 100) / 100;
         }
 
         if ('l/100km' === consumptionUnit) {
