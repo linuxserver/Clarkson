@@ -1,3 +1,7 @@
+**This project is no longer under development. The codebase is extrememly out of date and requires a ground-up rewrite. No further features will be added, and no PRs will be merged in.**
+I truly appreciate the response this application got, but I chose poorly when it came to the language/framework. Using Angular2 when it was just starting out and thus quite volatile and open to change wans't a smart move. As such, most of the code is now either deprecated or requires updates. I unfortunately don't have the time to do this.
+
+
 # Clarkson
 
 Clarkson is a web-based dashboard application that gives you a neat and clean interface for logging your fuel fill-ups for all of your vehicles. The application has full multi-user support, as well as multiple vehicles per user. Whenever you fill-up your car or motorcycle, keep the receipt and record the data in Clarkson.
